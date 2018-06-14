@@ -1,0 +1,26 @@
+<div [hidden]="uiStatus == 'loading'" class="center-box">
+  <div class="form-group files">
+    <label class="label-upload">Upload Your File </label>
+    <input
+      type="file"
+      class="form-control"
+      #file
+      (change)="onFilesAdded($event)"
+      accept="text/xml,.json"
+    >
+  </div>
+  <button mat-raised-button color="primary" class="add-files-btn" (click)="uploadFiles()">
+    Upload Files
+  </button>
+</div>
+<div class="center-box" [hidden]="uiStatus != 'loading'">
+  <div class="spinner">
+    <div class="cube1"></div>
+    <div class="cube2"></div>
+  </div>
+  <span class="notice">Your results are being calculated right now. Please be aware that <u>they will only remain available for a week.</u></span>
+</div>
+<div class="center-box" [hidden]="uiStatus != 'error'">
+  <span class="error">We had some error uploading your model, please try again.</span>
+</div>
+

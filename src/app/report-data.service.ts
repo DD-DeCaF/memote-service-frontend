@@ -1,0 +1,195 @@
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ResultCard } from './resultcard.model';
+import { TestResult } from './test-result.model';
+import { TestHistory } from './test-history.model';
+import * as Rx from "../../node_modules/rxjs";
+import {ApiService} from "./providers/api-service.service";
+// import * as testData from './data/testData.json';
+
+@Injectable()
+export class ReportDataService {
+  metaData: any;
+  allTests: any[] = [];
+  scoredCard: Object;
+  statisticsCards: ResultCard[] = [];
+  scoredTests: string[] = [];
+  reportType: string;
+  allExpandState = false;
+  score: any;
+
+  constructor(
+    private http: HttpClient,
+    private apiService: ApiService) {
+    const subscription = new Rx.Subscription();
+    subscription.add(apiService.reportObservable.subscribe((data) => {
+      this.loadResults(data);
+    }));
+  }
+
+  public loadResults(data = null): void {
+    this.reportType = ((<any>window).reportType);
+    switch (this.reportType) {
+      case 'history': {
+        this.convertHistoryResults(data);
+        break;
+      }
+      case 'snapshot': {
+        // TODO: Might want to parse and decompress a string in future.
+        // const data = JSON.parse((<any>window).data);
+        this.convertResults(data);
+        break;
+      }
+      case 'diff': {
+        // Diff report stuff happens here
+        break;
+      }
+      default: {
+        this.convertResults(data);
+        break;
+        // This is for development purposes only. When no matching reportType is specified the
+        // app resorts to displaying the test data.
+       /* this.http.get('/data/testData.json')
+        .subscribe(data => {this.convertResults(data); });
+        this.reportType = 'snapshot';
+        break;*/
+        // this.http.get('/data/testHistory.json')
+        // .subscribe(data => {this.convertHistoryResults(data); });
+        // this.reportType = 'history';
+        // break;
+      }
+  }
+}
+
+  public togglePanel() {
+    this.allExpandState = !this.allExpandState;
+  }
+
+  public byID(string) {
+    return this.allTests.find(x => x.id === string);
+  }
+
+  public byReg(string) {
+    const expr = new RegExp(string);
+    const groupedResultIDs = [];
+    for (const testResultObject of this.allTests) {
+      if (expr.test(testResultObject.id)) {
+        groupedResultIDs.push(testResultObject.id);
+      }
+    }
+    return groupedResultIDs;
+  }
+
+  public isScored(string) {
+    return this.scoredTests.includes(string);
+  }
+
+  public getParam(string, integer) {
+    return string.split(':')[integer];
+  }
+
+  public getString(object) {
+    return JSON.stringify(object);
+  }
+
+  private convertResults(data: Object): void {
+    // Store each test result as a TestResult object in a central list.
+    for (const test of Object.keys(data['tests'])){
+      if (data['tests'][test]['message'] instanceof Object) {
+        for (const param of Object.keys(data['tests'][test]['data'])) {
+          const newID = test + ':' + param;
+          this.allTests.push(
+              new TestResult(
+                newID,
+                {data: data['tests'][test]['data'][param],
+                duration: data['tests'][test]['duration'][param],
+                message: data['tests'][test]['message'][param],
+                metric: data['tests'][test]['metric'][param],
+                result: data['tests'][test]['result'][param],
+                summary: data['tests'][test]['summary'],
+                title: data['tests'][test]['title'],
+                format_type: data['tests'][test]['format_type']}
+              )
+            );
+        }
+      } else {
+      this.allTests.push(
+          new TestResult(
+            test,
+            data['tests'][test])
+      );
+      }
+    }
+    this.extractMetadata(data);
+    this.extractScoring(data);
+    this.distributeCardsToSections(data);
+    this.determineScoredTests();
+  }
+
+  private convertHistoryResults(data: Object): void {
+    // Store each test history result as a TestHistory object in a central list.
+    for (const test of Object.keys(data['tests'])){
+      if (data['tests'][test]['history'] instanceof Array) {
+        this.allTests.push(
+          new TestHistory(
+            test,
+            data['tests'][test])
+      );
+      } else {
+        for (const param of Object.keys(data['tests'][test]['history'])) {
+          const newID = test + ':' + param;
+          this.allTests.push(
+              new TestHistory(
+                newID,
+                {history: data['tests'][test]['history'][param],
+                summary: data['tests'][test]['summary'],
+                title: data['tests'][test]['title'],
+                format_type: data['tests'][test]['format_type']}
+              )
+            );
+        }
+    }
+  }
+  this.distributeCardsToSections(data);
+  this.determineScoredTests();
+  this.extractScoring(data);
+}
+
+  private extractMetadata(data: Object): void {
+    // Extract metaddata information to be used in the metadata card
+    this.metaData = data['meta'];
+  }
+
+  private extractScoring(data: Object): void {
+    // Extract score information to be used in the score display and bar chart plot
+    this.score = data['score'];
+  }
+
+  private distributeCardsToSections(data: Object): void {
+    for (const card of Object.keys(data['cards'])){
+      if (card === 'scored') {
+        this.scoredCard = data['cards']['scored'];
+      } else {
+        this.statisticsCards.push(
+          new ResultCard(
+            card,
+            data['cards'][card],
+          )
+        );
+      }
+    }
+  }
+
+  private determineScoredTests() {
+    // Build a list of IDs of tests that are scored. This is only used in the
+    //  logic of `result-button.component`.
+    // Has to be executed after distributeCardsToSections()
+    for (const section of Object.keys(this.scoredCard['sections'])) {
+      if (this.scoredCard['sections'][section]['cases'] instanceof Array) {
+      for (const testId of this.scoredCard['sections'][section]['cases']) {
+        this.scoredTests.push(testId);
+      }
+    }
+  }
+}
+}

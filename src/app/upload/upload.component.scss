@@ -1,0 +1,91 @@
+.files input {
+  outline: 2px dashed #2a7bb8;
+  outline-offset: -10px;
+  -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+  transition: outline-offset .15s ease-in-out, background-color .15s linear;
+  padding: 120px 0px 85px 45%;
+  text-align: center !important;
+  margin: 0;
+  width: 100% !important;
+  box-sizing:border-box;
+  -moz-box-sizing:border-box; /* Firefox */
+  -webkit-box-sizing:border-box; /* Safari */
+}
+.files input:focus{
+  outline: 2px dashed #2a7bb8;
+  outline-offset: -10px;
+  -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
+  transition: outline-offset .15s ease-in-out, background-color .15s linear; border:1px solid #2a7bb8;
+}
+.files{
+  position:relative;
+  outline: 0;
+}
+.files:after {  pointer-events: none;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 50px;
+  right: 0;
+  height: 56px;
+  content: "";
+  background-image: url(../../assets/images/upload.png);
+  display: block;
+  margin: 0 auto;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.color input{ background-color:#f1f1f1;}
+
+.files:before {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  pointer-events: none;
+  width: 100%;
+  right: 0;
+  height: 57px;
+  content: " or drag it here. ";
+  display: block;
+  margin: 0 auto;
+  color: #2a7bb8;
+  font-weight: 600;
+  text-transform: capitalize;
+  text-align: center;
+}
+
+.center-box {
+  text-align: center;
+  margin-top: 2%
+}
+
+.label-upload {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.notice {
+  font-weight: bold;
+  font-style: italic;
+  color: #2a7bb8;
+}
+
+@media only screen and (max-width : 979px) {
+  .files input {
+    padding: 120px 0px 85px 40%;
+  }
+}
+
+@media only screen and (max-width : 767px) {
+
+}
+
+@media only screen and (max-width : 480px) {
+  .files input {
+    padding: 120px 0px 85px 35%;
+  }
+}
+
+@media only screen and (max-width : 320px) {
+
+}
