@@ -19,6 +19,11 @@
     <div class="cube2"></div>
   </div>
   <span class="notice">Your results are being calculated right now. Please be aware that <u>they will only remain available for a week.</u></span>
+  <div class="notice-margin">
+    <span class="notice" *ngIf="status == 'started'">Your model is being tested. Please be patient for up to a few minutes, depending on the size of your model.</span>
+    <span class="notice" *ngIf="status == 'queued'">Your model is currently queued for testing. Please wait.</span>
+    <span class="error" *ngIf="status == 'failed'">An unforeseen error occurred while testing your model. Please get in touch via <a href="https://github.com/opencobra/memote-webservice/issues">https://github.com/opencobra/memote-webservice/issues</a>.</span>
+  </div>
 </div>
 <div class="center-box" [hidden]="uiStatus != 'error'">
   <span class="error">We had some error uploading your model, please try again.</span>

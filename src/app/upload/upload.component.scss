@@ -70,6 +70,16 @@
   color: #2a7bb8;
 }
 
+.notice-margin {
+  margin-top: 1%;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  font-style: italic;
+}
+
 @media only screen and (max-width : 979px) {
   .files input {
     padding: 120px 0px 85px 40%;

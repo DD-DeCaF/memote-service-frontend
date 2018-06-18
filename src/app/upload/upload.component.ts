@@ -18,11 +18,11 @@ export class UploadComponent implements OnInit {
   uiStatus = 'ideal';
 
   @ViewChild('file') fileInput: ElementRef;
+  public file: File = null;
+  public status: any = '';
 
   ngOnInit() {
   }
-
-  file: File = null;
 
   constructor(
     private apiService: ApiService,
@@ -54,6 +54,7 @@ export class UploadComponent implements OnInit {
           .do(data =>
           {
             console.log('DATA', data);
+            this.status = (<any>data).status;
             if((<any>data).finished) {
               this.apiService.getReport(uuid).subscribe(data => {
                 this.uiStatus = 'success';
@@ -67,7 +68,6 @@ export class UploadComponent implements OnInit {
           .takeWhile((data) =>  !(<any>data).finished)
           .subscribe(
             (data) => {
-
             },
             error => this.uiStatus = 'error');
       }, error => {
