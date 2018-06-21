@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { ResultCard } from './resultcard.model';
 import { TestResult } from './test-result.model';
 import { TestHistory } from './test-history.model';
-import * as Rx from "../../node_modules/rxjs";
-import {ApiService} from "./providers/api-service.service";
+import * as Rx from '../../node_modules/rxjs';
+import {ApiService} from './providers/api-service.service';
 // import * as testData from './data/testData.json';
 
 @Injectable()
