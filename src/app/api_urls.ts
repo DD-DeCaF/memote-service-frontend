@@ -1,8 +1,8 @@
 
-import { API_URL } from './constants';
+import { environment } from '../environments/environment';
 
 export const URLS = {
-  submit: API_URL + 'submit',
-  status: API_URL + 'status/',
-  report: API_URL + 'report/',
+  submit: environment.apiBaseUrl  + 'submit',
+  status: environment.apiBaseUrl + 'status/',
+  report: environment.apiBaseUrl + 'report/',
 };
