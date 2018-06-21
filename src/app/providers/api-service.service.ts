@@ -1,11 +1,10 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/interval';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/takeWhile';
-import * as Rx from 'rxjs/Rx';
+import * as Rx from 'rxjs/';
 
 import {URLS} from '../api_urls';
 
@@ -24,7 +23,7 @@ export class ApiService {
     this.reportObservable = this.reportSubject.asObservable();
   }
 
-  getApiUrl(path){
+  getApiUrl(path) {
     return URLS[path];
   }
 
@@ -49,7 +48,7 @@ export class ApiService {
     this.reportSubject.next(data);
   }
 
-  public getReportData(){
+  public getReportData() {
     return this.report;
   }
 

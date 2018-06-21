@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import * as Rx from 'rxjs/Rx';
 
 import { ReportDataService } from './../report-data.service';
-import { ApiService } from "../providers/api-service.service";
-import {ActivatedRoute} from "@angular/router";
+import { ApiService } from '../providers/api-service.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,7 +13,7 @@ import {ActivatedRoute} from "@angular/router";
 export class DashboardComponent implements OnInit {
 
   private uuid: any;
-  public uiStatus: string = 'ideal';
+  public uiStatus = 'ideal';
 
   constructor(
     public data: ReportDataService,
@@ -22,11 +21,11 @@ export class DashboardComponent implements OnInit {
     private apiService: ApiService
     ) {
     this.route.params.subscribe( params => this.uuid = params['uuid']);
-    if(!this.apiService.getReportData()){
+    if (!this.apiService.getReportData()) {
       this.uiStatus = 'loading';
-      this.apiService.getReport(this.uuid).subscribe(data => {
+      this.apiService.getReport(this.uuid).subscribe(result => {
         this.uiStatus = 'success';
-        this.apiService.setReport(data);
+        this.apiService.setReport(result);
       }, error => {
         this.uiStatus = 'error';
       });

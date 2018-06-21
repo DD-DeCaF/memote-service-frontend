@@ -1,10 +1,10 @@
 ///<reference path="../../../node_modules/@angular/core/src/metadata/directives.d.ts"/>
 import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
-import {Observable} from "rxjs/Observable";
-import "rxjs/add/operator/do";
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/operator/do';
 import { Router } from '@angular/router';
 
-import { ApiService } from "../providers/api-service.service";
+import { ApiService } from '../providers/api-service.service';
 
 
 @Component({
@@ -29,9 +29,9 @@ export class UploadComponent implements OnInit {
     private router: Router) { }
 
   onFilesAdded(event) {
-    if(event){
+    if (event) {
       if (this.checkExtension(event.target.files[0].name)) {
-        this.file = event.target.files[0]
+        this.file = event.target.files[0];
       } else {
         alert('Format not valid, please upload .xml or .json');
         this.fileInput.nativeElement.value = '';
@@ -40,7 +40,7 @@ export class UploadComponent implements OnInit {
   }
 
   checkExtension(filename) {
-    var parts = filename.split('.');
+    const parts = filename.split('.');
     return (parts[parts.length - 1] === 'xml' || parts[parts.length - 1] === 'json');
   }
 
@@ -48,26 +48,25 @@ export class UploadComponent implements OnInit {
     this.uiStatus = 'loading';
     this.apiService.upload(this.file).subscribe(data => {
       const uuid = (<any>data).uuid;
-      this.apiService.getStatus(uuid).subscribe(data => {
+      this.apiService.getStatus(uuid).subscribe(result => {
         Observable.interval(1000)
           .switchMap(() => this.apiService.getStatus(uuid))
-          .do(data =>
-          {
-            console.log('DATA', data);
-            this.status = (<any>data).status;
-            if((<any>data).finished) {
-              this.apiService.getReport(uuid).subscribe(data => {
+          .do(status => {
+            console.log('DATA', status);
+            this.status = (<any>status).status;
+            if ((<any>result).finished) {
+              this.apiService.getReport(uuid).subscribe(report => {
                 this.uiStatus = 'success';
-                this.apiService.setReport(data);
+                this.apiService.setReport(report);
                 this.router.navigate(['dashboard', uuid]);
                 }, error => {
                 this.uiStatus = 'error';
               });
             }
           })
-          .takeWhile((data) =>  !(<any>data).finished)
+          .takeWhile((observable) =>  !(<any>observable).finished)
           .subscribe(
-            (data) => {
+            (observable) => {
             },
             error => this.uiStatus = 'error');
       }, error => {

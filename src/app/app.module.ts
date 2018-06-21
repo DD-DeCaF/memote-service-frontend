@@ -15,8 +15,8 @@ import { KeysPipe } from './keys.pipe';
 import { SystemInformationComponent } from './dashboard/system-information/system-information.component';
 import { AccordionComponent } from './accordion/accordion.component';
 import { ResultButtonComponent } from './result-button/result-button.component';
-import { VegaPlotComponent } from "./vega-plot/vega-plot.component";
-import { VegaBarChartComponent } from "./vega-bar-chart/vega-bar-chart.component";
+import { VegaPlotComponent } from './vega-plot/vega-plot.component';
+import { VegaBarChartComponent } from './vega-bar-chart/vega-bar-chart.component';
 import { UploadComponent } from './upload/upload.component';
 import { ApiService } from './providers/api-service.service';
 
@@ -66,7 +66,7 @@ const appRoutes: Routes = [
 export class AppModule implements OnInit {
 
   constructor(private reportDataService: ReportDataService) {
-    //this.reportDataService.loadResults();
+    // this.reportDataService.loadResults();
   }
 
   ngOnInit() {
