@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs/Observable";
-import "rxjs/add/observable/interval";
-import "rxjs/add/operator/switchMap";
-import "rxjs/add/operator/map";
-import "rxjs/add/operator/takeWhile";
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/interval';
+import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/takeWhile';
 import * as Rx from 'rxjs/Rx';
 
 import {URLS} from '../api_urls';
