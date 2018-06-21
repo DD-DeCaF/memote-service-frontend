@@ -1,0 +1,61 @@
+sudo: required
+
+addons:
+  chrome: stable
+
+language: node_js
+
+node_js:
+  - "9.5.0"
+
+git:
+  depth: 2
+
+services:
+  - docker
+
+env:
+  global:
+    - IMAGE_REPO=gcr.io/dd-decaf-cfbf6/memote-service-frontend
+    - IMAGE_TAG=travis-ci-test
+    - IMAGE=${IMAGE_REPO}:${IMAGE_TAG}
+
+before_install:
+  - npm install -g @angular/cli
+  - npm i -g npm@6.1.0
+
+install:
+  - npm ci
+  - ng build
+
+cache:
+  directories:
+  - "$HOME/.npm"
+
+script:
+  - node scripts/transpileMd.js src/app/app-welcome/app-welcome.content.md src/app/app-welcome/app-welcome.content.html
+  - ng lint
+  - ng test --watch false
+  - ./scripts/verify_license_headers.sh
+
+before_deploy:
+  - ./scripts/install_gcloud.sh
+  - ./scripts/install_kubectl.sh
+  - docker build -t ${IMAGE_REPO}:${TRAVIS_COMMIT::12} -t ${IMAGE_REPO}:${TRAVIS_BRANCH} .
+  - docker push ${IMAGE_REPO}:${TRAVIS_COMMIT::12}
+  - docker push ${IMAGE_REPO}:${TRAVIS_BRANCH}
+
+deploy:
+  provider: script
+  script: ./scripts/deploy.sh
+  on:
+    all_branches: true
+
+notifications:
+  email: false
+  slack:
+    rooms:
+      secure: ereLekhrbdwlXuzEOZbdAbV12OVdxfLZ2ZDBekugTP8gsCHYEa1VUybJJYstaZLhg1Kj1JmS3HugFaD4DiBvlyYFiiYGNBw+px8EnKFaqFJTlHF/0MxcIyaewoWYEAvqOUN6Rl9GkzJyShm+lsrop1vOviw5FGgSRZRBko/SEvuvOprs556X7LylYeO7BwE7okk9gzAyevf7+AkPnGO8ShnSYYrI9bKwBVeGeUZr3GWvRt0IBuwV3Cr1DBsmJpTf93ex19RKEXq/u7+gd6omrlHvkYSmmw0msD3nC77saNOGs7l8zCHsrTzcCHJwZRPzMJhnsQj2m53qEeWAxBWD7u5B4mdcZKfRCgzdQ2mY7ZtGTtnZLTsnzTO7xFF42rwLchYVT+sjVBpb4R0t3QZdhPhwTauqWdzLvkz7fb7CLmjaiBwYGlSBbpmzc2THh1gRAH223jYUae3OP3KrgA1qR81fHfSefYUikXpzcaXmobsfyJmy47FHzVrruvCHLaD54UBa8mjMOYT/JUx9UJyb3wRKw2cJSP0MZ2YgevYV1CHxWWQhWnesDNA/U/i5M3qjmZHYYbIoqbcLPbD8NupfE2Ib2A2l0zuGqsBaG22zMzbFcUK3+CM8fuh0FtrPllpxf3pi9fHm0UbT4IsyYrTR64KyUoDkIi4mQJaYUikWkPk=
+    on_success: change
+    on_failure: change
+    on_pull_requests: false

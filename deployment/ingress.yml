@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: memote-service-frontend
+spec:
+  tls:
+  - hosts:
+    - memote.dd-decaf.eu
+    secretName: decaf-tls
+  rules:
+  - host: memote.dd-decaf.eu
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: memote-service-frontend-staging
+          servicePort: 80
