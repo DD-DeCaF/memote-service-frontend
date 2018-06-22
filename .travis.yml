@@ -34,7 +34,6 @@ cache:
 
 script:
   - ng lint
-  - ng test --watch false
 
 before_deploy:
   - ./scripts/install_gcloud.sh
