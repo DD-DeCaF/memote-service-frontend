@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl: 'http://localhost:8000/',
+  apiBaseUrl: 'https://api.dd-decaf.eu/memote-webservice/',
 };
