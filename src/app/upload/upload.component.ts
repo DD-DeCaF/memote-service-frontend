@@ -54,7 +54,8 @@ export class UploadComponent implements OnInit {
           .do(status => {
             console.log('DATA', status);
             this.status = (<any>status).status;
-            if ((<any>result).finished) {
+            if (this.status === 'finished') {
+              console.log('IF THIS STATUS', this.status);
               this.apiService.getReport(uuid).subscribe(report => {
                 this.uiStatus = 'success';
                 this.apiService.setReport(report);
@@ -67,6 +68,7 @@ export class UploadComponent implements OnInit {
           .takeWhile((observable) =>  !(<any>observable).finished)
           .subscribe(
             (observable) => {
+              console.log('OBSERVABLE TAKE A WHILE', observable);
             },
             error => this.uiStatus = 'error');
       }, error => {
