@@ -17,9 +17,9 @@
 set -xeu
 
 if [ "${TRAVIS_BRANCH}" = "master" ]; then
-  DEPLOYMENT=model-production
+  DEPLOYMENT=memote-service-frontend-production
 elif [ "${TRAVIS_BRANCH}" = "devel" ]; then
-  DEPLOYMENT=model-staging
+  DEPLOYMENT=memote-service-frontend-staging
 else
   echo "Skipping deployment for branch ${TRAVIS_BRANCH}"
   exit 0
