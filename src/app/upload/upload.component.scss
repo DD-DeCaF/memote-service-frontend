@@ -3,13 +3,17 @@
   outline-offset: -10px;
   -webkit-transition: outline-offset .15s ease-in-out, background-color .15s linear;
   transition: outline-offset .15s ease-in-out, background-color .15s linear;
-  padding: 120px 0px 85px 45%;
+  padding: 120px 0px 85px 20%;
   text-align: center !important;
-  margin: 0;
   width: 100% !important;
   box-sizing:border-box;
   -moz-box-sizing:border-box; /* Firefox */
   -webkit-box-sizing:border-box; /* Safari */
+  margin-left:auto;
+  margin-right: auto;
+  cursor:pointer;
+  max-width: 800px;
+  display: block;
 }
 .files input:focus{
   outline: 2px dashed #2a7bb8;
@@ -25,9 +29,9 @@
   position: absolute;
   top: 60px;
   left: 0;
-  width: 50px;
+  width: 70px;
   right: 0;
-  height: 56px;
+  height: 70px;
   content: "";
   background-image: url(../../assets/images/upload.png);
   display: block;
@@ -80,9 +84,21 @@
   font-style: italic;
 }
 
+@media only screen and (max-width : 2560px) {
+  .files input {
+    padding: 120px 0 85px 10%;
+  }
+}
+
+@media only screen and (max-width : 1440px) {
+  .files input {
+    padding: 120px 0 85px 20%;
+  }
+}
+
 @media only screen and (max-width : 979px) {
   .files input {
-    padding: 120px 0px 85px 40%;
+    padding: 120px 0 85px 30%;
   }
 }
 
@@ -92,10 +108,12 @@
 
 @media only screen and (max-width : 480px) {
   .files input {
-    padding: 120px 0px 85px 35%;
+    padding: 120px 0 85px 20%;
   }
 }
 
 @media only screen and (max-width : 320px) {
-
+  .files input {
+    padding: 120px 0 85px 4%;
+  }
 }
