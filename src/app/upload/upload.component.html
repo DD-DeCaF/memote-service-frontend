@@ -22,10 +22,38 @@
   <div class="notice-margin">
     <span class="notice" *ngIf="status == 'started'">Your model is being tested. Please be patient for up to a few minutes, depending on the size of your model.</span>
     <span class="notice" *ngIf="status == 'queued'">Your model is currently queued for testing. Please wait.</span>
-    <span class="error" *ngIf="status == 'failed'">An unforeseen error occurred while testing your model. Please get in touch via <a href="https://github.com/opencobra/memote-webservice/issues">https://github.com/opencobra/memote-webservice/issues</a>.</span>
+    <span class="error" *ngIf="status == 'failed'">An unforeseen error occurred while testing your model. Please get in touch via <a
+      href="https://github.com/opencobra/memote-webservice/issues">https://github.com/opencobra/memote-webservice/issues</a>.</span>
   </div>
 </div>
 <div class="center-box" [hidden]="uiStatus != 'error'">
   <span class="error">We had some error uploading your model, please try again.</span>
 </div>
-
+<div class="center-box" [hidden]="uiStatus == 'loading'">
+  <h4>The initial development of memote has received funding from:</h4>
+  <div layout="row" layout-margin layout-wrap layout-align="center center" style="width: 100%;">
+    <mat-card fxLayout='column'
+              fxFlex="27.5%"
+              fxFlexAlign='stretch'>
+    </mat-card>
+    <mat-card fxLayout='column'
+              fxFlex="15%"
+              fxFlexAlign='stretch'>
+    <a href="http://novonordiskfonden.dk/en" target="_blank"><img src="../../assets/images/novo_nordisk.png" class="icon nordisk"/></a>
+    </mat-card>
+    <mat-card fxLayout='column'
+              fxFlex="15%"
+              fxFlexAlign='stretch'>
+    <a href="https://innovationsfonden.dk/da" target="_blank"><img src="../../assets/images/innovationsfonden.png" class="icon" /></a>
+    </mat-card>
+    <mat-card fxLayout='column'
+              fxFlex="15%"
+              fxFlexAlign='stretch'>
+    <a href="http://dd-decaf.eu/" target="_blank"><img src="../../assets/images/decaf-logo-md.svg" class="icon" /></a>
+    </mat-card>
+    <mat-card fxLayout='column'
+              fxFlex="27.5%"
+              fxFlexAlign='stretch'>
+    </mat-card>
+  </div>
+</div>
