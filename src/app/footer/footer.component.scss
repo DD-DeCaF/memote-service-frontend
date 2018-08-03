@@ -1,0 +1,19 @@
+.icon{
+  width: 50%;
+}
+
+.fund-span{
+  font-size: 12px;
+}
+
+@media only screen and (max-width : 480px) {
+  .fund-span{
+    font-size: 6px;
+  }
+}
+
+@media only screen and (max-width : 320px) {
+  .fund-span{
+    font-size: 6px;
+  }
+}

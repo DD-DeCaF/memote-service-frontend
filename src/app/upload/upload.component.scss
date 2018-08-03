@@ -84,11 +84,6 @@
   font-style: italic;
 }
 
-.mat-card{
-  background: transparent !important;
-  box-shadow: none !important;
-}
-
 .icon{
   width: 100%;
 }
@@ -96,6 +91,31 @@
 .nordisk{
   margin-top: 20%;
 }
+
+footer {
+  text-align: center;
+  position: relative;
+  margin-top: 5%;
+  bottom: 0;
+}
+
+.left-box {
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100% !important;
+  max-width: 800px;
+}
+
+a{
+  color: #2a7bb8;
+}
+
+.note-list{
+  padding-left: 0;
+  list-style: none;
+}
+
 @media only screen and (max-width : 2560px) {
   .files input {
     padding: 120px 0 85px 10%;

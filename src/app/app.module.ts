@@ -19,6 +19,7 @@ import { VegaPlotComponent } from './vega-plot/vega-plot.component';
 import { VegaBarChartComponent } from './vega-bar-chart/vega-bar-chart.component';
 import { UploadComponent } from './upload/upload.component';
 import { ApiService } from './providers/api-service.service';
+import { FooterComponent } from './footer/footer.component';
 
 
 const appRoutes: Routes = [
@@ -42,6 +43,7 @@ const appRoutes: Routes = [
     VegaPlotComponent,
     VegaBarChartComponent,
     UploadComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
