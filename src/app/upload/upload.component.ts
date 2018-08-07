@@ -5,6 +5,7 @@ import 'rxjs/add/operator/do';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { ApiService } from '../providers/api-service.service';
+import {ReportDataService} from '../report-data.service';
 
 
 @Component({
@@ -26,10 +27,11 @@ export class UploadComponent implements OnInit {
   constructor(
     private apiService: ApiService,
     private router: Router,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private report: ReportDataService) { }
 
   ngOnInit() {
-   console.log('on inigit',   );
+    this.report.ngOnDestroy();
   }
 
   onFilesAdded(event) {
@@ -63,6 +65,7 @@ export class UploadComponent implements OnInit {
               console.log('IF THIS STATUS', this.status);
               this.apiService.getReport(uuid).subscribe(report => {
                 this.uiStatus = 'success';
+                console.log("REPOOOOOOOORT", report);
                 this.apiService.setReport(report);
                 this.router.navigate(['dashboard', uuid]);
                 }, error => {
