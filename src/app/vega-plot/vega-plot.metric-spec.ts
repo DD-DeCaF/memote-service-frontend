@@ -1,259 +1,259 @@
 export const specMetric = {
-  '$schema': 'https://vega.github.io/schema/vega/v3.0.json',
-  'width': 350,
-  'height': 200,
-  'padding': 0,
-  'signals': [
+  "$schema": "https://vega.github.io/schema/vega/v3.0.json",
+  "width": 350,
+  "height": 200,
+  "padding": 0,
+  "signals": [
     {
-      'name': 'shift', 'value': false,
-      'on': [
+      "name": "shift", "value": false,
+      "on": [
         {
-          'events': '@legendSymbol:click, @legendLabel:click',
-          'update': 'event.shiftKey',
-          'force':  true
+          "events": "@legendSymbol:click, @legendLabel:click",
+          "update": "event.shiftKey",
+          "force":  true
         }
       ]
     },
     {
-      'name': 'clicked', 'value': null,
-      'on': [
+      "name": "clicked", "value": null,
+      "on": [
         {
-          'events': '@legendSymbol:click, @legendLabel:click',
-          'update': '{value: datum.value}',
-          'force':  true
+          "events": "@legendSymbol:click, @legendLabel:click",
+          "update": "{value: datum.value}",
+          "force":  true
         }
       ]
     },
     {
-      'name': 'type',
-      'value': 'data',
-      'description': 'This keyword describes which data is displayed on the y-axis.'
+      "name": "type",
+      "value": "data",
+      "description": "This keyword describes which data is displayed on the y-axis."
     }
   ],
-  'data': [
+  "data": [
     {
-      'name': 'scores',
-      'values': []
+      "name": "scores",
+      "values": []
     },
     {
-      'name': 'selected',
-      'on': [
+      "name": "selected",
+      "on": [
         {
-          'trigger': 'clicked',
-          'toggle': 'clicked'
+          "trigger": "clicked",
+          "toggle": "clicked"
         }
       ]
     }
   ],
-  'scales': [
+  "scales": [
     {
-      'name': 'x',
-      'type': 'point',
-      'range': 'width',
-      'domain': {
-        'data': 'scores',
-        'field': 'commit'
+      "name": "x",
+      "type": "point",
+      "range": "width",
+      "domain": {
+        "data": "scores",
+        "field": "commit"
       }
     },
     {
-      'name': 'y',
-      'type': 'linear',
-      'range': 'height',
-      'nice': true,
-      'zero': true,
-      'domain': {
-        'data': 'scores',
-        'field': {'signal' : 'type'}
+      "name": "y",
+      "type": "linear",
+      "range": "height",
+      "nice": true,
+      "zero": true,
+      "domain": {
+        "data": "scores",
+        "field": {"signal" : "type"}
       }
     },
     {
-      'name': 'color',
-      'type': 'ordinal',
-      'range': ['#000000', '#E69F00', '#56B4E9', '#009E73', '#F0E442', '#0072B2', '#D55E00', '#CC79A7'],
-      'domain': {
-        'data': 'scores',
-        'field': 'branch'
+      "name": "color",
+      "type": "ordinal",
+      "range": ["#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7"],
+      "domain": {
+        "data": "scores",
+        "field": "branch"
       }
     }
   ],
-  'axes': [
+  "axes": [
     {
-      'orient': 'bottom',
-      'scale': 'x',
-      'title': 'History',
-      'encode': {
-        'labels': {
-          'interactive': true,
-          'update': {
-            'angle': {
-              'value': 50
+      "orient": "bottom",
+      "scale": "x",
+      "title": "History",
+      "encode": {
+        "labels": {
+          "interactive": true,
+          "update": {
+            "angle": {
+              "value": 50
             },
-            'limit': {
-              'value': 50
+            "limit": {
+              "value": 50
             },
-            'baseline': {
-              'value': 'top'
+            "baseline": {
+              "value": "top"
             },
-            'dx': {
-              'value': 3
+            "dx": {
+              "value": 3
             },
-            'align': {
-              'value': 'left'
+            "align": {
+              "value": "left"
             }
           }
         }
       }
     },
     {
-      'orient': 'left',
-      'scale': 'y',
-      'title': {'signal' : 'type === \'metric\' ? \'Metric\': \'Data\''}
+      "orient": "left",
+      "scale": "y",
+      "title": {"signal" : "type === 'metric' ? 'Metric': 'Data'"}
     }
   ],
-  'marks': [
+  "marks": [
     {
-      'type': 'group',
-      'from': {
-        'facet': {
-          'name': 'series',
-          'data': 'scores',
-          'groupby': 'branch'
+      "type": "group",
+      "from": {
+        "facet": {
+          "name": "series",
+          "data": "scores",
+          "groupby": "branch"
         }
       },
-      'legends': [
+      "legends": [
     {
-      'stroke': 'color',
-      'title': 'Branches',
-      'padding': 4,
-      'orient': 'left',
-      'offset': 30,
-      'encode': {
-        'symbols': {
-          'name': 'legendSymbol',
-          'interactive': true,
-          'enter': {
-                'cursor': {
-                  'value': 'pointer'
+      "stroke": "color",
+      "title": "Branches",
+      "padding": 4,
+      "orient": "left",
+      "offset": 30,
+      "encode": {
+        "symbols": {
+          "name": "legendSymbol",
+          "interactive": true,
+          "enter": {
+                "cursor": {
+                  "value": "pointer"
                 }
           },
-          'update': {
-            'fill': {'value': 'transparent'},
-            'strokeWidth': {'value': 2},
-            'opacity': [
-              {'test': '!length(data(\'selected\')) || indata(\'selected\', \'value\', datum.value)', 'value': 0.7},
-              {'value': 0.15}
+          "update": {
+            "fill": {"value": "transparent"},
+            "strokeWidth": {"value": 2},
+            "opacity": [
+              {"test": "!length(data('selected')) || indata('selected', 'value', datum.value)", "value": 0.7},
+              {"value": 0.15}
             ],
-            'size': {'value': 64}
+            "size": {"value": 64}
           }
         },
-        'labels': {
-          'name': 'legendLabel',
-          'interactive': true,
-          'enter': {
-                'cursor': {
-                  'value': 'pointer'
+        "labels": {
+          "name": "legendLabel",
+          "interactive": true,
+          "enter": {
+                "cursor": {
+                  "value": "pointer"
                 }
           },
-          'update': {
-            'opacity': [
-              {'test': '!length(data(\'selected\')) || indata(\'selected\', \'value\', datum.value)', 'value': 1},
-              {'value': 0.25}
+          "update": {
+            "opacity": [
+              {"test": "!length(data('selected')) || indata('selected', 'value', datum.value)", "value": 1},
+              {"value": 0.25}
             ]
           }
         }
       }
     }
   ],
-      'marks': [
+      "marks": [
         {
-          'type': 'line',
-          'from': {
-            'data': 'series'
+          "type": "line",
+          "from": {
+            "data": "series"
           },
-          'encode': {
-            'enter': {
-              'x': {
-                'scale': 'x',
-                'field': 'commit'
+          "encode": {
+            "enter": {
+              "x": {
+                "scale": "x",
+                "field": "commit"
               },
-              'y': {
-                'scale': 'y',
-                'field': {'signal' : 'type'}
+              "y": {
+                "scale": "y",
+                "field": {"signal" : "type"}
               },
-              'stroke': {
-                'scale': 'color',
-                'field': 'branch'
+              "stroke": {
+                "scale": "color",
+                "field": "branch"
               },
-              'strokeWidth': {
-                'value': 2
+              "strokeWidth": {
+                "value": 2
               }
             },
-            'update': {
-              'interpolate': {
-                'value': 'linear'
+            "update": {
+              "interpolate": {
+                "value": "linear"
               },
-              'opacity': [
+              "opacity": [
                 {
-                  'test': '!length(data(\'selected\')) || indata(\'selected\', \'value\', datum.branch)',
-                  'value': 1
+                  "test": "!length(data('selected')) || indata('selected', 'value', datum.branch)",
+                  "value": 1
                 },
                 {
-                  'value': 0
+                  "value": 0
                 }
               ]
             }
           }
         },
         {
-          'type': 'symbol',
-          'from': {
-            'data': 'series'
+          "type": "symbol",
+          "from": {
+            "data": "series"
           },
-          'encode': {
-            'enter': {
-              'x': {
-                'scale': 'x',
-                'field': 'commit'
+          "encode": {
+            "enter": {
+              "x": {
+                "scale": "x",
+                "field": "commit"
               },
-              'y': {
-                'scale': 'y',
-                'field': {'signal' : 'type'}
+              "y": {
+                "scale": "y",
+                "field": {"signal" : "type"}
               },
-              'fill': {
-                'scale': 'color',
-                'field': 'branch'
+              "fill": {
+                "scale": "color",
+                "field": "branch"
               },
-              'size': {
-                'value': 90
+              "size": {
+                "value": 90
               },
-              'tooltip': {
-                'scale': 'x',
-                'field': 'commit'
+              "tooltip": {
+                "scale": "x",
+                "field": "commit"
               }
             },
-            'update': {
-              'opacity': [
+            "update": {
+              "opacity": [
                 {
-                  'test': '!length(data(\'selected\')) || indata(\'selected\', \'value\', datum.branch)',
-                  'value': 1
+                  "test": "!length(data('selected')) || indata('selected', 'value', datum.branch)",
+                  "value": 1
                 },
                 {
-                  'value': 0
+                  "value": 0
                 }
               ]
             },
-            'hover': {
-              'opacity': [
+            "hover": {
+              "opacity": [
                 {
-                  'test': '!length(data(\'selected\')) || indata(\'selected\', \'value\', datum.branch)',
-                  'value': 0.5
+                  "test": "!length(data('selected')) || indata('selected', 'value', datum.branch)",
+                  "value": 0.5
                 },
                 {
-                  'value': 0
+                  "value": 0
                 }
               ],
-              'cursor': {
-                'value': 'pointer'
+              "cursor": {
+                "value": "pointer"
               }
             }
           }

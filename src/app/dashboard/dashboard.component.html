@@ -1,38 +1,18 @@
 <div
   fxLayout='row wrap'
   fxLayoutAlign='center stretch'
-  style="
-    margin-top: 3%;
-    margin-bottom: 2%;">
-  <div class="center-box" [hidden]="uiStatus != 'error'">
-    <span class="error">We had some error uploading your model, please try again.</span>
-  </div>
-  <div class="center-box" [hidden]="uiStatus != 'loading'">
-    <div class="spinner">
-      <div class="cube1"></div>
-      <div class="cube2"></div>
-    </div>
-  </div>
-</div>
-<div
-  fxLayout='row wrap'
-  fxLayoutAlign='center stretch'
-  fxLayout.xs='column'
-  [hidden]="uiStatus == 'loading'"
->
+  fxLayout.xs='column'>
   <div
     fxLayout='column'
     fxFlex="45%"
     fxFlexAlign='stretch'
     style="margin:0.5vmax">
     <mat-toolbar
-
       class="mat-elevation-z2"
-      color='secondary'> Scored Tests
-    </mat-toolbar>
-    <mat-card fxFlex *ngIf='data.scoredCard'>
-      <app-universal-core [scoreData]="data.scoredCard"></app-universal-core>
-    </mat-card>
+      color='secondary'> Scored Tests </mat-toolbar>
+      <mat-card fxFlex *ngIf='data.scoredCard'>
+        <app-universal-core [scoreData]="data.scoredCard"></app-universal-core>
+      </mat-card>
   </div>
   <div
     fxLayout='column'
@@ -41,17 +21,16 @@
     fxLayoutAlign='start stretch'
     style="margin:0.5vmax"
     *ngIf='data'>
-    <mat-toolbar
+      <mat-toolbar
       class="mat-elevation-z2"
-      color='secondary'> Unscored Tests
-    </mat-toolbar>
-    <div
-      *ngFor="let card of data.statisticsCards">
-      <app-statistics [currentCard]="card"></app-statistics>
-    </div>
-    <div
-      *ngIf='data.metaData'>
-      <app-system-information></app-system-information>
-    </div>
-  </div>
+      color='secondary'> Unscored Tests </mat-toolbar>
+      <div
+        *ngFor="let card of data.statisticsCards">
+          <app-statistics [currentCard]="card"></app-statistics>
+      </div>
+      <div
+        *ngIf='data.metaData'>
+          <app-system-information></app-system-information>
+      </div>
+   </div>
 </div>
