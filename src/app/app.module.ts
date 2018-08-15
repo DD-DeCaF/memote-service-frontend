@@ -3,6 +3,7 @@ import { NgModule, OnInit } from '@angular/core';
 import { AppMaterialModule } from './app.material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {HttpClientModule} from '@angular/common/http';
+import {RouterModule, Routes} from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -20,7 +21,16 @@ import { VegaBarChartComponent } from './vega-bar-chart/vega-bar-chart.component
 import { VegaTotalScoreBarChartComponent } from './vega-total-score-bar-chart/vega-total-score-bar-chart.component';
 import { VegaGroupedBarChartComponent } from './vega-grouped-bar-chart/vega-grouped-bar-chart.component';
 import { HelpDialogComponent, HelpDialogTextComponent} from './help-dialog/help-dialog.component';
+import { UploadComponent } from './upload/upload.component';
+import { ApiService } from './providers/api-service.service';
+import { FooterComponent } from './footer/footer.component';
 
+const appRoutes: Routes = [
+  { path: 'dashboard/:uuid', component: DashboardComponent },
+  { path: 'upload', component: UploadComponent },
+  { path: '',  redirectTo: '/upload',  pathMatch: 'full'
+  }
+];
 
 @NgModule({
   declarations: [
@@ -39,20 +49,29 @@ import { HelpDialogComponent, HelpDialogTextComponent} from './help-dialog/help-
     VegaGroupedBarChartComponent,
     VegaTotalScoreBarChartComponent,
     HelpDialogComponent,
-    HelpDialogTextComponent
+    HelpDialogTextComponent,
+    UploadComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
     AppMaterialModule,
     FlexLayoutModule,
     HttpClientModule,
+    RouterModule.forRoot(
+      appRoutes,
+      { enableTracing: false } // <-- debugging purposes only
+    ),
   ],
   exports: [
     BrowserModule,
     AppMaterialModule
   ],
   entryComponents: [HelpDialogComponent, HelpDialogTextComponent],
-  providers: [ReportDataService],
+  providers: [
+    ReportDataService,
+    ApiService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule implements OnInit {

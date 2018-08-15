@@ -2,9 +2,10 @@
 import {Component, ElementRef, OnInit, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/operator/do';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { ApiService } from '../providers/api-service.service';
+import {ReportDataService} from '../report-data.service';
 
 
 @Component({
@@ -20,13 +21,18 @@ export class UploadComponent implements OnInit {
   @ViewChild('file') fileInput: ElementRef;
   public file: File = null;
   public status: any = '';
+  public url: any = '';
 
-  ngOnInit() {
-  }
 
   constructor(
     private apiService: ApiService,
-    private router: Router) { }
+    private router: Router,
+    private route: ActivatedRoute,
+    private report: ReportDataService) { }
+
+  ngOnInit() {
+    this.report.ngOnDestroy();
+  }
 
   onFilesAdded(event) {
     if (event) {
@@ -48,6 +54,7 @@ export class UploadComponent implements OnInit {
     this.uiStatus = 'loading';
     this.apiService.upload(this.file).subscribe(data => {
       const uuid = (<any>data).uuid;
+      this.url = window.location.protocol + '//' + window.location.host + '/dashboard/' + uuid;
       this.apiService.getStatus(uuid).subscribe(result => {
         Observable.interval(1000)
           .switchMap(() => this.apiService.getStatus(uuid))
@@ -58,6 +65,7 @@ export class UploadComponent implements OnInit {
               console.log('IF THIS STATUS', this.status);
               this.apiService.getReport(uuid).subscribe(report => {
                 this.uiStatus = 'success';
+                console.log("REPOOOOOOOORT", report);
                 this.apiService.setReport(report);
                 this.router.navigate(['dashboard', uuid]);
                 }, error => {
@@ -69,8 +77,7 @@ export class UploadComponent implements OnInit {
           .subscribe(
             (observable) => {
               console.log('OBSERVABLE TAKE A WHILE', observable);
-            },
-            error => this.uiStatus = 'error');
+            }, error => this.uiStatus = 'error');
       }, error => {
         this.uiStatus = 'error';
 
