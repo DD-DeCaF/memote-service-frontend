@@ -29,12 +29,14 @@ import {
  * https://material.angular.io/guide/getting-started#step-3-import-the-component-modules
  */
 @NgModule({
-  imports: [ BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatListModule, MatToolbarModule, MatIconModule, MatFormFieldModule, MatInputModule,
-    MatCardModule, MatSidenavModule, MatMenuModule, MatAutocompleteModule, MatDialogModule, MatTableModule, MatSortModule,
-    MatPaginatorModule, MatTooltipModule, MatProgressBarModule, MatGridListModule, MatSelectModule, MatExpansionModule],
-  exports: [ BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatListModule, MatToolbarModule, MatIconModule, MatFormFieldModule, MatInputModule,
-    MatCardModule, MatSidenavModule, MatMenuModule, MatAutocompleteModule, MatDialogModule, MatTableModule, MatSortModule,
-    MatPaginatorModule, MatTooltipModule, MatProgressBarModule, MatGridListModule, MatSelectModule, MatExpansionModule]
+  imports: [ BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatListModule, MatToolbarModule, MatIconModule,
+    MatFormFieldModule, MatInputModule, MatCardModule, MatSidenavModule, MatMenuModule, MatAutocompleteModule, MatDialogModule,
+    MatTableModule, MatSortModule, MatPaginatorModule, MatTooltipModule, MatProgressBarModule, MatGridListModule, MatSelectModule,
+    MatExpansionModule],
+  exports: [ BrowserAnimationsModule, MatButtonModule, MatCheckboxModule, MatListModule, MatToolbarModule, MatIconModule,
+    MatFormFieldModule, MatInputModule, MatCardModule, MatSidenavModule, MatMenuModule, MatAutocompleteModule, MatDialogModule,
+    MatTableModule, MatSortModule, MatPaginatorModule, MatTooltipModule, MatProgressBarModule, MatGridListModule, MatSelectModule,
+    MatExpansionModule]
 })
 export class AppMaterialModule {
 }

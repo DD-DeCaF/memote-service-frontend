@@ -9,23 +9,23 @@ export const specGroupedBarChart = {
       'name': 'diff',
       'values': [],
       'transform': [
-        {"type": "formula", "as": "percent", "expr": "round(datum.score * 100)"}
+        {'type': 'formula', 'as': 'percent', 'expr': 'round(datum.score * 100)'}
       ]
     }
   ],
-  "legends": [
+  'legends': [
     {
       'columns' : 0,
-      "orient": "bottom",
-      "fill": "color",
-      "encode": {
-        "title": {
-          "update": {
-            "fontSize": {"value": 14}
+      'orient': 'bottom',
+      'fill': 'color',
+      'encode': {
+        'title': {
+          'update': {
+            'fontSize': {'value': 14}
           }
         },
-        "labels": {
-          "interactive": false
+        'labels': {
+          'interactive': false
         }
       }
     }
@@ -117,11 +117,11 @@ export const specGroupedBarChart = {
               'align': {'value': 'left'},
               'baseline': {'value': 'middle'},
               'text': { 'field': 'datum.percent'},
-              "fontSize": {"value": 18}
+              'fontSize': {'value': 18}
             }
           }
         }
       ]
     }
   ]
-}
+};

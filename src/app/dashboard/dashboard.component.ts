@@ -29,7 +29,7 @@ export class DashboardComponent implements OnInit {
         if (error.status = 404) {
           this.errorMessage = 'Your model has not been found. Please check that the url entered is correct.';
         } else {
-          this.errorMessage = 'Your model is still being processed. Try again later'
+          this.errorMessage = 'Your model is still being processed. Try again later';
         }
         this.uiStatus = 'error';
       });

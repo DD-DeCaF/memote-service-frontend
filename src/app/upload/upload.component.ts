@@ -65,7 +65,7 @@ export class UploadComponent implements OnInit {
               console.log('IF THIS STATUS', this.status);
               this.apiService.getReport(uuid).subscribe(report => {
                 this.uiStatus = 'success';
-                console.log("REPOOOOOOOORT", report);
+                console.log('REPOOOOOOOORT', report);
                 this.apiService.setReport(report);
                 this.router.navigate(['dashboard', uuid]);
                 }, error => {
