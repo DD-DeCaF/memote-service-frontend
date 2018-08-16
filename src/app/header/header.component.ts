@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewEncapsulation, Input } from '@angular/core';
 import { ReportDataService } from './../report-data.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-header',
@@ -9,9 +10,14 @@ import { ReportDataService } from './../report-data.service';
 })
 export class HeaderComponent implements OnInit {
 
-  constructor(private data: ReportDataService) { }
+  constructor(
+    private data: ReportDataService,
+    private location: Location) { }
 
   ngOnInit() {
   }
 
+  isNotUpload(): boolean {
+    return this.location.path().indexOf('/upload') === -1;
+  }
 }

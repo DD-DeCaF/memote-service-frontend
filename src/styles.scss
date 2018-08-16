@@ -158,3 +158,25 @@ textarea {
   text-align: center;
 }
 
+.MatButtonEmulation {
+  font: caption;
+  display:inline-block;
+  margin: 0.05vh;
+  white-space: normal;
+  word-wrap: break-word;
+  border-radius: 2px;
+  text-align: center;
+  color: white ;
+  background: #2a7bb8;
+  width: 70px;
+  padding: 0.5vw;
+  height: auto;
+.mat-card{
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+footer{
+  text-align: center;
+}
+}

@@ -107,7 +107,7 @@ export const specMetric = {
     {
       'orient': 'left',
       'scale': 'y',
-      'title': {'signal' : 'type === \'metric\' ? \'Metric\': \'Data\''}
+      'title': {'signal' : 'type === "metric" ? "Metric": "Data"'}
     }
   ],
   'marks': [
@@ -140,7 +140,7 @@ export const specMetric = {
             'fill': {'value': 'transparent'},
             'strokeWidth': {'value': 2},
             'opacity': [
-              {'test': '!length(data(\'selected\')) || indata(\'selected\', \'value\', datum.value)', 'value': 0.7},
+              {'test': '!length(data("selected")) || indata("selected", "value", datum.value)', 'value': 0.7},
               {'value': 0.15}
             ],
             'size': {'value': 64}
@@ -156,7 +156,7 @@ export const specMetric = {
           },
           'update': {
             'opacity': [
-              {'test': '!length(data(\'selected\')) || indata(\'selected\', \'value\', datum.value)', 'value': 1},
+              {'test': '!length(data("selected")) || indata("selected", "value", datum.value)', 'value': 1},
               {'value': 0.25}
             ]
           }
@@ -194,7 +194,7 @@ export const specMetric = {
               },
               'opacity': [
                 {
-                  'test': '!length(data(\'selected\')) || indata(\'selected\', \'value\', datum.branch)',
+                  'test': '!length(data("selected")) || indata("selected", "value", datum.branch)',
                   'value': 1
                 },
                 {
@@ -234,7 +234,7 @@ export const specMetric = {
             'update': {
               'opacity': [
                 {
-                  'test': '!length(data(\'selected\')) || indata(\'selected\', \'value\', datum.branch)',
+                  'test': '!length(data("selected")) || indata("selected", "value", datum.branch)',
                   'value': 1
                 },
                 {
@@ -245,7 +245,7 @@ export const specMetric = {
             'hover': {
               'opacity': [
                 {
-                  'test': '!length(data(\'selected\')) || indata(\'selected\', \'value\', datum.branch)',
+                  'test': '!length(data("selected")) || indata("selected", "value", datum.branch)',
                   'value': 0.5
                 },
                 {

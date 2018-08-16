@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-
 import { ReportDataService } from './../report-data.service';
 import { ApiService } from '../providers/api-service.service';
 import {ActivatedRoute} from '@angular/router';
@@ -11,9 +10,9 @@ import {ActivatedRoute} from '@angular/router';
   encapsulation: ViewEncapsulation.None
 })
 export class DashboardComponent implements OnInit {
-
   private uuid: any;
   public uiStatus = 'ideal';
+  public errorMessage: any = '';
 
   constructor(
     public data: ReportDataService,
@@ -27,6 +26,11 @@ export class DashboardComponent implements OnInit {
         this.uiStatus = 'success';
         this.apiService.setReport(result);
       }, error => {
+        if (error.status = 404) {
+          this.errorMessage = 'Your model has not been found. Please check that the url entered is correct.';
+        } else {
+          this.errorMessage = 'Your model is still being processed. Try again later';
+        }
         this.uiStatus = 'error';
       });
     }
@@ -34,7 +38,4 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
   }
-
-
-
 }

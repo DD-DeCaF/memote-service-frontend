@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, OnInit } from '@angular/core';
 import { AppMaterialModule } from './app.material';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { HttpClientModule } from '@angular/common/http';
+import {HttpClientModule} from '@angular/common/http';
 import {RouterModule, Routes} from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -15,11 +15,15 @@ import { KeysPipe } from './keys.pipe';
 import { SystemInformationComponent } from './dashboard/system-information/system-information.component';
 import { AccordionComponent } from './accordion/accordion.component';
 import { ResultButtonComponent } from './result-button/result-button.component';
+import { DiffButtonComponent } from './diff-button/diff-button.component';
 import { VegaPlotComponent } from './vega-plot/vega-plot.component';
 import { VegaBarChartComponent } from './vega-bar-chart/vega-bar-chart.component';
+import { VegaTotalScoreBarChartComponent } from './vega-total-score-bar-chart/vega-total-score-bar-chart.component';
+import { VegaGroupedBarChartComponent } from './vega-grouped-bar-chart/vega-grouped-bar-chart.component';
+import { HelpDialogComponent, HelpDialogTextComponent} from './help-dialog/help-dialog.component';
 import { UploadComponent } from './upload/upload.component';
 import { ApiService } from './providers/api-service.service';
-
+import { FooterComponent } from './footer/footer.component';
 
 const appRoutes: Routes = [
   { path: 'dashboard/:uuid', component: DashboardComponent },
@@ -39,9 +43,15 @@ const appRoutes: Routes = [
     SystemInformationComponent,
     AccordionComponent,
     ResultButtonComponent,
+    DiffButtonComponent,
     VegaPlotComponent,
     VegaBarChartComponent,
+    VegaGroupedBarChartComponent,
+    VegaTotalScoreBarChartComponent,
+    HelpDialogComponent,
+    HelpDialogTextComponent,
     UploadComponent,
+    FooterComponent,
   ],
   imports: [
     BrowserModule,
@@ -57,6 +67,7 @@ const appRoutes: Routes = [
     BrowserModule,
     AppMaterialModule
   ],
+  entryComponents: [HelpDialogComponent, HelpDialogTextComponent],
   providers: [
     ReportDataService,
     ApiService
@@ -66,7 +77,7 @@ const appRoutes: Routes = [
 export class AppModule implements OnInit {
 
   constructor(private reportDataService: ReportDataService) {
-    // this.reportDataService.loadResults();
+    this.reportDataService.loadResults();
   }
 
   ngOnInit() {
