@@ -5,10 +5,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - memote.dd-decaf.eu
-    secretName: decaf-tls
+    - memote.io
+    secretName: memote-tls
   rules:
-  - host: memote.dd-decaf.eu
+  - host: memote.io
     http:
       paths:
       - path: /
