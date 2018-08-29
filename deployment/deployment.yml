@@ -24,3 +24,32 @@ spec:
             cpu: "100m"
           limits:
             cpu: "1000m"
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: memote-service-frontend-staging
+spec:
+  selector:
+    matchLabels:
+      app: memote-service-frontend
+      env: staging
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: memote-service-frontend
+        env: staging
+    spec:
+      containers:
+      - name: web
+        image: gcr.io/dd-decaf-cfbf6/memote-service-frontend:devel
+        ports:
+        - containerPort: 80
+        resources:
+          requests:
+            cpu: "10m"
+          limits:
+            cpu: "100m"
