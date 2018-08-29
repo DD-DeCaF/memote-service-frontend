@@ -15,3 +15,25 @@ spec:
         backend:
           serviceName: memote-service-frontend-staging
           servicePort: 80
+
+---
+
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: memote-service-frontend-redirect
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: https://memote.io
+spec:
+  tls:
+  - hosts:
+    - memote.dd-decaf.eu
+    secretName: decaf-tls
+  rules:
+  - host: memote.dd-decaf.eu
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: memote-service-frontend-staging
+          servicePort: 80
