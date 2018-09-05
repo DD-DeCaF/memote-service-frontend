@@ -13,21 +13,3 @@ spec:
     protocol: TCP
     port: 80
     targetPort: 80
-
----
-
-kind: Service
-apiVersion: v1
-metadata:
-  name: memote-service-frontend-staging
-  annotations:
-    prometheus.io/probe: "true"
-spec:
-  selector:
-    app: memote-service-frontend
-    env: staging
-  ports:
-  - name: web
-    protocol: TCP
-    port: 80
-    targetPort: 80
