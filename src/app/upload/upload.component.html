@@ -1,6 +1,6 @@
 <div [hidden]="uiStatus == 'loading'" class="center-box">
   <div class="form-group files">
-    <label class="label-upload">Upload Your File </label>
+    <label class="label-upload">Upload Your Model </label>
     <input
       type="file"
       class="form-control"
@@ -10,7 +10,7 @@
     >
   </div>
   <button mat-raised-button color="primary" class="add-files-btn" (click)="uploadFiles()">
-    Upload Files
+    Upload
   </button>
   <div class="left-box">
     <p>Hi there!</p>
@@ -34,17 +34,18 @@
         cobrapy
       </a>.
     </p>
-    NOTE:
+    PLEASE NOTE:
     <ul class="note-list">
     <li>- Depending on the amount of reactions in your model, testing may take a while (possibly &gt;10 minutes).</li>
-    <li>- Currently, the resulting report only points to potential issues yet offers only limited suggestions
+    <li>- Currently, the resulting report points to potential issues yet offers only limited suggestions
       towards fixing these. Get involved to change this!</li>
     <li>- Genome-scale metabolic models are published in two flavors:
       Condition-specific models vs. Uninitialized Reconstructions. Individual unscored tests may only apply to the
-    former as they require initialization.</li></ul>
-    <p>Check out the <a href="http://memote.readthedocs.io/en/latest/" target="_blank">documentation</a> <a
-      href="https://www.biorxiv.org/content/early/2018/07/11/350991" target="_blank">Cite us</a>
-      Star us and contribute on <a
+    former as they require initialization.</li>
+    <li>- Be aware that <u>the report will remain available for up to one week via an auto-generated URL.</u></li></ul>
+    <p>Check out the <a href="http://memote.readthedocs.io/en/latest/" target="_blank">documentation</a>, <a
+      href="https://www.biorxiv.org/content/early/2018/07/11/350991" target="_blank">Cite us</a>,
+      Star us, and contribute on <a
         href="https://www.github.com/opencobra/memote" target="_blank">GitHub</a></p>
   </div>
 </div>
@@ -66,9 +67,9 @@
       </a>.
     </span>
     <div>
-      <span *ngIf="url" class="notice">You can access your model in the next URL <a [href]="url" target="_blank">
+      <span *ngIf="url" class="notice">You can access your report with the following URL <a [href]="url" target="_blank">
         {{url}}
-      </a> when the process is finished, you can close the window and return late</span>
+      </a> when the process is finished, you can close the window and return later</span>
     </div>
   </div>
 </div>
