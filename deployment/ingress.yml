@@ -38,5 +38,5 @@ spec:
       paths:
       - path: /
         backend:
-          serviceName: memote-service-frontend-staging
+          serviceName: memote-service-frontend-production
           servicePort: 80
