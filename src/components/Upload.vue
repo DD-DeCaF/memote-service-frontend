@@ -4,19 +4,43 @@
       <label class="label-upload">Upload Your Model</label>
       <input
         type="file"
+        ref="modelInput"
         class="form-control"
         accept="text/xml,.json,.xml.gz,.xml.bz2"
+        @change="uploadFile()"
       >
     </div>
-    <button class="btn blue darken-2">Upload
-      <i class="material-icons right">cloud_upload</i>
-    </button>
   </div>
 </template>
 
 <script>
+import * as axios from 'axios';
+
 export default {
   name: 'Upload',
+  methods: {
+    uploadFile() {
+      if(!this.$refs.modelInput.files) {
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("model", this.$refs.modelInput.files[0]);
+
+      axios
+        // TODO
+        .post(`http://localhost:8000/memote-webservice/submit`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(response => {
+          this.$emit('task-created', response.data.uuid);
+        }).catch(error => {
+          // TODO
+          console.log(error);
+        });
+    },
+  },
 }
 </script>
 
