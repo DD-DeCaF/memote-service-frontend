@@ -10,4 +10,5 @@ export default {
 </script>
 
 <style>
+  @import './assets/materialize.min.css';
 </style>
