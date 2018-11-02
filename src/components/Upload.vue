@@ -10,6 +10,9 @@
         @change="uploadFile()"
       >
     </div>
+    <div class="progress" v-if="uploading">
+      <div class="indeterminate"></div>
+    </div>
   </div>
 </template>
 
@@ -18,12 +21,16 @@ import * as axios from 'axios';
 
 export default {
   name: 'Upload',
+  data: () => ({
+    uploading: false,
+  }),
   methods: {
     uploadFile() {
       if(!this.$refs.modelInput.files) {
         return;
       }
 
+      this.uploading = true;
       const formData = new FormData();
       formData.append("model", this.$refs.modelInput.files[0]);
 
@@ -38,6 +45,9 @@ export default {
         }).catch(error => {
           // TODO
           console.log(error);
+        }).then(() => {
+          this.$refs.modelInput.value = '';
+          this.uploading = false;
         });
     },
   },
