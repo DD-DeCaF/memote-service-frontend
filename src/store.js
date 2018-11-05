@@ -53,7 +53,7 @@ export default new Vuex.Store({
           if(response.data.status === 'PENDING') {
             // PENDING in celery means "don't know". If the job is not expired, assume it is in the queue, otherwise
             // mark it as expired.
-            if(task.expiry.isBefore(moment())) {
+            if (moment(payload.task.expiry).isBefore(moment())) {
               payload.task.status = 'EXPIRED';
             } else {
               payload.task.status = 'QUEUED';
