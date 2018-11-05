@@ -42,6 +42,7 @@ export default {
       }
 
       this.uploading = true;
+      this.uploadProgress = 0;
       this.uploadError = false;
       this.uploadErrorMessage = null;
       const formData = new FormData();
