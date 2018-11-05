@@ -35,7 +35,7 @@ export default {
       this.$store.state.tasks.forEach((task, index) => {
         this.$store.dispatch('pollTaskStatus', {task: task, index: index});
       })
-      setTimeout(pollTasksLoop, 1000);
+      setTimeout(pollTasksLoop, 3000);
     }
     pollTasksLoop();
   },
