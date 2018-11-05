@@ -60,8 +60,7 @@ export default new Vuex.Store({
             payload.task.status = response.data.status;
           }
         }).catch(error => {
-          // TODO
-          console.error(error);
+          payload.task.status = 'POLL_ERROR';
         }).then(() => {
           context.commit('setTask', { index: payload.index, task: payload.task });
           context.dispatch('storeTasks');

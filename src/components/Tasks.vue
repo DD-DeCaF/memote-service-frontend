@@ -19,6 +19,7 @@
             <span v-if="task.status === 'FAILURE'">Errored</span>
             <span v-if="task.status === 'SUCCESS'">Completed</span>
             <span v-if="task.status === 'EXPIRED'">Expired</span>
+            <span v-if="task.status === 'POLL_ERROR'">Unknown</span>
           </td>
           <td>
             <div class="preloader-wrapper small active" v-if="task.status === 'QUEUED'">
@@ -41,6 +42,9 @@
               <i class="material-icons left">done</i>
               View report
             </a>
+            <span v-if="task.status === 'POLL_ERROR'" class="red-text">
+              Could not retrieve results. Retrying automatically.
+            </span>
           </td>
         </tr>
       </tbody>
