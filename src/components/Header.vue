@@ -1,5 +1,5 @@
 <template>
-  <nav class="blue darken-2">
+  <nav class="memote-blue z-depth-3">
     <div class="nav-wrapper">
       <div class="row">
         <div class="col s6">
@@ -28,7 +28,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.memote-blue {
+  background-color: #2a7bb8;
+}
+
 img {
   width: 52px;
   margin: 5px 15px;
