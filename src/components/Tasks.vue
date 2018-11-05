@@ -16,7 +16,7 @@
           <td>
             <span v-if="task.status === 'QUEUED'">In queue</span>
             <span v-if="task.status === 'STARTED'">Started</span>
-            <span v-if="task.status === 'FAILURE'">Errored</span>
+            <span v-if="task.status === 'FAILURE'">Failure</span>
             <span v-if="task.status === 'SUCCESS'">Completed</span>
             <span v-if="task.status === 'EXPIRED'">Expired</span>
             <span v-if="task.status === 'POLL_ERROR'">Unknown</span>
@@ -37,7 +37,15 @@
               <!-- TODO: determinate progress -->
               <div class="indeterminate"></div>
             </div>
-            <p v-if="task.status === 'FAILED'">View error report (TODO)</p>
+            <div v-if="task.status === 'FAILURE'">
+              <p>An error occurred during test execution. Please let us know by <a href="https://github.com/opencobra/memote/issues">submitting an issue</a> with your full model and the error message below:</p>
+              <p class="red-tex" v-if="!task.failureMessage">
+                Loading error report...
+              </p>
+              <p class="red-text" v-if="task.failureMessage">
+                <strong>{{ task.failureException }}: {{ task.failureMessage }}</strong>
+              </p>
+            </div>
             <a v-if="task.status === 'SUCCESS'" class="btn" :href="'report/' + task.uuid" target="_blank">
               <i class="material-icons left">done</i>
               View report

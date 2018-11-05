@@ -22,6 +22,8 @@ export default new Vuex.Store({
         uuid: uuid,
         submitted: new Date(),
         status: 'QUEUED',
+        failureException: null,
+        failureMessage: null,
       });
     },
   },
@@ -56,8 +58,28 @@ export default new Vuex.Store({
             } else {
               payload.task.status = 'QUEUED';
             }
+          } else if(response.data.status === 'FAILURE') {
+            payload.task.status = response.data.status;
+            context.dispatch('getTask', payload);
           } else {
             payload.task.status = response.data.status;
+          }
+          context.commit('setTask', { index: payload.index, task: payload.task });
+          context.dispatch('storeTasks');
+        }).catch(error => {
+          payload.task.status = 'POLL_ERROR';
+          context.commit('setTask', { index: payload.index, task: payload.task });
+          context.dispatch('storeTasks');
+        });
+      },
+      getTask(context, payload) {
+        axios
+        .get(`${settings.api}/report/${payload.task.uuid}`)
+        .then(response => {
+          payload.task.status = response.data.status;
+          if(response.data.status === 'FAILURE') {
+            payload.task.failureException = response.data.exception;
+            payload.task.failureMessage = response.data.message;
           }
         }).catch(error => {
           payload.task.status = 'POLL_ERROR';
