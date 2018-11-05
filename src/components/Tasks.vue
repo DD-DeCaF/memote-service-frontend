@@ -8,6 +8,7 @@
           <th>Expires</th>
           <th>Status</th>
           <th>View results</th>
+          <th>Clear</th>
         </tr>
       </thead>
       <tbody>
@@ -56,6 +57,11 @@
               Could not retrieve results. Retrying automatically.
             </span>
           </td>
+          <td>
+            <a class="btn-flat" @click="clearTask(task)">
+              <i class="material-icons">delete</i>
+            </a>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -67,6 +73,11 @@ import moment from 'moment';
 
 export default {
   name: 'Tasks',
+  methods: {
+    clearTask(task) {
+      this.$store.dispatch('clearTask', task);
+    }
+  },
   computed: {
     tasks() {
       return this.$store.state.tasks;

@@ -17,6 +17,9 @@ export default new Vuex.Store({
     setTask(state, payload) {
       state.tasks[payload.index] = payload.task;
     },
+    clearTask(state, task) {
+      state.tasks = state.tasks.filter(t => t !== task);
+    },
     addTask(state, uuid) {
       state.tasks.push({
         uuid: uuid,
@@ -40,6 +43,10 @@ export default new Vuex.Store({
     },
     addTask(context, uuid) {
       context.commit('addTask', uuid);
+      context.dispatch('storeTasks');
+    },
+    clearTask(context, task) {
+      context.commit('clearTask', task);
       context.dispatch('storeTasks');
     },
     pollTaskStatus(context, payload) {
