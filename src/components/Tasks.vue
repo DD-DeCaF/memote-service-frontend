@@ -5,6 +5,7 @@
         <tr>
           <th>UUID</th>
           <th>Submitted</th>
+          <th>Expires</th>
           <th>Status</th>
           <th>View results</th>
         </tr>
@@ -12,7 +13,8 @@
       <tbody>
         <tr v-for="task in tasks" :key="task.uuid">
           <td>{{ task.uuid }}</td>
-          <td>{{ task.submitted }}</td>
+          <td>{{ task.submitted | formatDate }}</td>
+          <td>{{ task.expiry | formatDate }}</td>
           <td>
             <span v-if="task.status === 'QUEUED'">In queue</span>
             <span v-if="task.status === 'STARTED'">Started</span>
@@ -61,12 +63,19 @@
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
   name: 'Tasks',
   computed: {
     tasks() {
       return this.$store.state.tasks;
     },
+  },
+  filters: {
+    formatDate: (date) => {
+      return moment(date).format('YYYY-MM-DD');
+    }
   }
 }
 </script>
