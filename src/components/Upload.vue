@@ -11,7 +11,7 @@
       >
     </div>
     <div class="progress" v-if="uploading">
-      <div class="indeterminate"></div>
+      <div class="determinate" :style="'width: ' + uploadProgress + '%'"></div>
     </div>
     <div class="card blue-grey darken-1" v-if="uploadError">
       <div class="card-content red white-text">
@@ -31,6 +31,7 @@ export default {
   name: 'Upload',
   data: () => ({
     uploading: false,
+    uploadProgress: null,
     uploadError: false,
     uploadErrorMessage: null,
   }),
@@ -50,7 +51,10 @@ export default {
         .post(`${settings.api}/submit`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
-          }
+          },
+          onUploadProgress: (progressEvent) => {
+            this.uploadProgress = parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total));
+          },
         }).then(response => {
           this.$store.dispatch('addTask', response.data.uuid)
         }).catch(error => {
