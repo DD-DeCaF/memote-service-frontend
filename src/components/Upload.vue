@@ -6,7 +6,7 @@
         type="file"
         ref="modelInput"
         class="form-control"
-        accept="text/xml,.json,.xml.gz,.xml.bz2"
+        accept="text/xml,.json,.xml.gz,.xml.bz2,.sbml.gz,.sbml.bz2"
         @change="uploadFile()"
       >
     </div>
