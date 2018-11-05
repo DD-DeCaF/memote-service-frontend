@@ -1,12 +1,7 @@
 sudo: required
-
-addons:
-  chrome: stable
-
 language: node_js
-
 node_js:
-  - "9.5.0"
+  - "node"
 
 git:
   depth: 2
@@ -14,26 +9,23 @@ git:
 services:
   - docker
 
-env:
-  global:
-    - IMAGE_REPO=gcr.io/dd-decaf-cfbf6/memote-service-frontend
-    - IMAGE_TAG=travis-ci-test
-    - IMAGE=${IMAGE_REPO}:${IMAGE_TAG}
-
-before_install:
-  - npm install -g @angular/cli
-  - npm i -g npm@6.1.0
-
-install:
-  - npm ci
-  - ng build
-
 cache:
   directories:
   - "$HOME/.npm"
 
+env:
+  global:
+    - IMAGE_REPO=gcr.io/dd-decaf-cfbf6/memote-service-frontend
+
+before_install:
+  - npm install -g @vue/cli @vue/cli-service-global
+
+install:
+  - npm ci
+  - npm run build
+
 script:
-  - ng lint
+  - npm run lint
 
 before_deploy:
   - ./scripts/install_gcloud.sh
