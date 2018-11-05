@@ -20,8 +20,9 @@ export default new Vuex.Store({
     clearTask(state, task) {
       state.tasks = state.tasks.filter(t => t !== task);
     },
-    addTask(state, uuid) {
+    addTask(state, { filename, uuid }) {
       state.tasks.push({
+        filename: filename,
         uuid: uuid,
         submitted: moment().toJSON(),
         expiry: moment().add(settings.resultExpires, 'days').toJSON(),

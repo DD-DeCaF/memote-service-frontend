@@ -3,7 +3,7 @@
     <table class="striped" v-if="tasks.length > 0">
       <thead>
         <tr>
-          <th>UUID</th>
+          <th>Model</th>
           <th>Submitted</th>
           <th>Expires</th>
           <th>Status</th>
@@ -13,7 +13,7 @@
       </thead>
       <tbody>
         <tr v-for="task in tasks" :key="task.uuid">
-          <td>{{ task.uuid }}</td>
+          <td>{{ task.filename }}</td>
           <td>{{ task.submitted | formatDate }}</td>
           <td>{{ task.expiry | formatDate }}</td>
           <td>

@@ -56,7 +56,10 @@ export default {
             this.uploadProgress = parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total));
           },
         }).then(response => {
-          this.$store.dispatch('addTask', response.data.uuid)
+          this.$store.dispatch('addTask', {
+            uuid: response.data.uuid,
+            filename: this.$refs.modelInput.files[0].name,
+          })
         }).catch(error => {
           this.uploadError = true;
           if(error.response) {
