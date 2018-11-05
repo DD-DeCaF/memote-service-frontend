@@ -45,7 +45,7 @@ export default new Vuex.Store({
       }
 
       axios
-        .get(`http://localhost:8000/memote-webservice/status/${payload.task.uuid}`)
+        .get(`${settings.api}/status/${payload.task.uuid}`)
         .then(response => {
           if(response.data.status === 'PENDING') {
             // PENDING in celery means "don't know". If the job is not expired, assume it is in the queue, otherwise

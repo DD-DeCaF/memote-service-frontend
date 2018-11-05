@@ -25,6 +25,7 @@
 
 <script>
 import * as axios from 'axios';
+import settings from '@/settings';
 
 export default {
   name: 'Upload',
@@ -46,8 +47,7 @@ export default {
       formData.append("model", this.$refs.modelInput.files[0]);
 
       axios
-        // TODO
-        .post(`http://localhost:8000/memote-webservice/submit`, formData, {
+        .post(`${settings.api}/submit`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data'
           }
