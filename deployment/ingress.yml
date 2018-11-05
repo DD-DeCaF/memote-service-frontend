@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: memote-service-frontend-production
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  tls:
+  - hosts:
+    - memote.io
+    secretName: memote-tls
+  rules:
+  - host: memote.io
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: memote-service-frontend-production
+          servicePort: 80
