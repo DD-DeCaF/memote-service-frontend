@@ -8,7 +8,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    tasks: []
+    tasks: [],
   },
   mutations: {
     setTasks(state, tasks) {
@@ -22,8 +22,8 @@ export default new Vuex.Store({
     },
     addTask(state, { filename, uuid }) {
       state.tasks.push({
-        filename: filename,
-        uuid: uuid,
+        filename,
+        uuid,
         submitted: moment().toJSON(),
         expiry: moment().add(settings.resultExpires, 'days').toJSON(),
         status: 'QUEUED',
@@ -57,8 +57,8 @@ export default new Vuex.Store({
 
       axios
         .get(`${settings.api}/status/${payload.task.uuid}`)
-        .then(response => {
-          if(response.data.status === 'PENDING') {
+        .then((response) => {
+          if (response.data.status === 'PENDING') {
             // PENDING in celery means "don't know". If the job is not expired, assume it is in the queue, otherwise
             // mark it as expired.
             if (moment(payload.task.expiry).isBefore(moment())) {
@@ -66,7 +66,7 @@ export default new Vuex.Store({
             } else {
               payload.task.status = 'QUEUED';
             }
-          } else if(response.data.status === 'FAILURE') {
+          } else if (response.data.status === 'FAILURE') {
             payload.task.status = response.data.status;
             context.dispatch('getTask', payload);
           } else {
@@ -74,22 +74,22 @@ export default new Vuex.Store({
           }
           context.commit('setTask', { index: payload.index, task: payload.task });
           context.dispatch('storeTasks');
-        }).catch(error => {
+        }).catch((error) => {
           payload.task.status = 'POLL_ERROR';
           context.commit('setTask', { index: payload.index, task: payload.task });
           context.dispatch('storeTasks');
         });
-      },
-      getTask(context, payload) {
-        axios
+    },
+    getTask(context, payload) {
+      axios
         .get(`${settings.api}/report/${payload.task.uuid}`)
-        .then(response => {
+        .then((response) => {
           payload.task.status = response.data.status;
-          if(response.data.status === 'FAILURE') {
+          if (response.data.status === 'FAILURE') {
             payload.task.failureException = response.data.exception;
             payload.task.failureMessage = response.data.message;
           }
-        }).catch(error => {
+        }).catch((error) => {
           payload.task.status = 'POLL_ERROR';
         }).then(() => {
           context.commit('setTask', { index: payload.index, task: payload.task });

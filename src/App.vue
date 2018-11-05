@@ -9,8 +9,6 @@
 </template>
 
 <script>
-import * as axios from 'axios';
-
 import Header from './components/Header.vue';
 import Upload from './components/Upload.vue';
 import Tasks from './components/Tasks.vue';
@@ -33,10 +31,10 @@ export default {
     // Loop all tasks and refresh their status indefinitely.
     const pollTasksLoop = () => {
       this.$store.state.tasks.forEach((task, index) => {
-        this.$store.dispatch('pollTaskStatus', {task: task, index: index});
-      })
+        this.$store.dispatch('pollTaskStatus', { task, index });
+      });
       setTimeout(pollTasksLoop, 3000);
-    }
+    };
     pollTasksLoop();
   },
 };

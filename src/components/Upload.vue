@@ -37,7 +37,7 @@ export default {
   }),
   methods: {
     uploadFile() {
-      if(!this.$refs.modelInput.files) {
+      if (!this.$refs.modelInput.files) {
         return;
       }
 
@@ -45,24 +45,24 @@ export default {
       this.uploadError = false;
       this.uploadErrorMessage = null;
       const formData = new FormData();
-      formData.append("model", this.$refs.modelInput.files[0]);
+      formData.append('model', this.$refs.modelInput.files[0]);
 
       axios
         .post(`${settings.api}/submit`, formData, {
           headers: {
-            'Content-Type': 'multipart/form-data'
+            'Content-Type': 'multipart/form-data',
           },
           onUploadProgress: (progressEvent) => {
             this.uploadProgress = parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total));
           },
-        }).then(response => {
+        }).then((response) => {
           this.$store.dispatch('addTask', {
             uuid: response.data.uuid,
             filename: this.$refs.modelInput.files[0].name,
-          })
-        }).catch(error => {
+          });
+        }).catch((error) => {
           this.uploadError = true;
-          if(error.response) {
+          if (error.response) {
             this.uploadErrorMessage = error.response.data.message;
           }
         }).then(() => {
@@ -71,7 +71,7 @@ export default {
         });
     },
   },
-}
+};
 </script>
 
 <style scoped>

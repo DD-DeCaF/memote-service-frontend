@@ -76,7 +76,7 @@ export default {
   methods: {
     clearTask(task) {
       this.$store.dispatch('clearTask', task);
-    }
+    },
   },
   computed: {
     tasks() {
@@ -84,9 +84,7 @@ export default {
     },
   },
   filters: {
-    formatDate: (date) => {
-      return moment(date).format('YYYY-MM-DD');
-    }
-  }
-}
+    formatDate: date => moment(date).format('YYYY-MM-DD'),
+  },
+};
 </script>

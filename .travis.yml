@@ -24,8 +24,9 @@ install:
   - npm ci
   - npm run build
 
-script:
-  - npm run lint
+# TODO: configure and run linter
+# script:
+#   - npm run lint
 
 before_deploy:
   - ./scripts/install_gcloud.sh
