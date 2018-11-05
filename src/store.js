@@ -20,7 +20,8 @@ export default new Vuex.Store({
     addTask(state, uuid) {
       state.tasks.push({
         uuid: uuid,
-        submitted: new Date(),
+        submitted: moment().toJSON(),
+        expiry: moment().add(settings.resultExpires, 'days').toJSON(),
         status: 'QUEUED',
         failureException: null,
         failureMessage: null,
@@ -52,8 +53,7 @@ export default new Vuex.Store({
           if(response.data.status === 'PENDING') {
             // PENDING in celery means "don't know". If the job is not expired, assume it is in the queue, otherwise
             // mark it as expired.
-            const expiry = moment(payload.task.submitted).add(settings.resultExpires, 'days');
-            if(expiry.isBefore(moment(new Date()))) {
+            if(task.expiry.isBefore(moment())) {
               payload.task.status = 'EXPIRED';
             } else {
               payload.task.status = 'QUEUED';
