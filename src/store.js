@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import * as axios from 'axios';
+import * as moment from 'moment';
+import settings from '@/settings';
 
 Vue.use(Vuex);
 
@@ -19,7 +21,7 @@ export default new Vuex.Store({
       state.tasks.push({
         uuid: uuid,
         submitted: new Date(),
-        status: 'PENDING',
+        status: 'QUEUED',
       });
     },
   },
@@ -45,7 +47,18 @@ export default new Vuex.Store({
       axios
         .get(`http://localhost:8000/memote-webservice/status/${payload.task.uuid}`)
         .then(response => {
-          payload.task.status = response.data.status;
+          if(response.data.status === 'PENDING') {
+            // PENDING in celery means "don't know". If the job is not expired, assume it is in the queue, otherwise
+            // mark it as expired.
+            const expiry = moment(payload.task.submitted).add(settings.resultExpires, 'days');
+            if(expiry.isBefore(moment(new Date()))) {
+              payload.task.status = 'EXPIRED';
+            } else {
+              payload.task.status = 'QUEUED';
+            }
+          } else {
+            payload.task.status = response.data.status;
+          }
         }).catch(error => {
           // TODO
           console.error(error);
