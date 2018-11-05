@@ -13,6 +13,13 @@
     <div class="progress" v-if="uploading">
       <div class="indeterminate"></div>
     </div>
+    <div class="card blue-grey darken-1" v-if="uploadError">
+      <div class="card-content red white-text">
+        <span class="card-title">Could not upload your model</span>
+        <p>We're sorry, we encountered an issue while trying to upload your model.</p>
+        <p v-if="uploadErrorMessage"><em>{{ uploadErrorMessage }}</em></p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -23,6 +30,8 @@ export default {
   name: 'Upload',
   data: () => ({
     uploading: false,
+    uploadError: false,
+    uploadErrorMessage: null,
   }),
   methods: {
     uploadFile() {
@@ -31,6 +40,8 @@ export default {
       }
 
       this.uploading = true;
+      this.uploadError = false;
+      this.uploadErrorMessage = null;
       const formData = new FormData();
       formData.append("model", this.$refs.modelInput.files[0]);
 
@@ -43,8 +54,10 @@ export default {
         }).then(response => {
           this.$store.dispatch('addTask', response.data.uuid)
         }).catch(error => {
-          // TODO
-          console.log(error);
+          this.uploadError = true;
+          if(error.response) {
+            this.uploadErrorMessage = `${error.response.status}: ${error.response.data.message}`;
+          }
         }).then(() => {
           this.$refs.modelInput.value = '';
           this.uploading = false;
