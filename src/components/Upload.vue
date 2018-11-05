@@ -41,7 +41,7 @@ export default {
             'Content-Type': 'multipart/form-data'
           }
         }).then(response => {
-          this.$emit('task-created', response.data.uuid);
+          this.$store.dispatch('addTask', response.data.uuid)
         }).catch(error => {
           // TODO
           console.log(error);

@@ -10,7 +10,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="task in tasks">
+        <tr v-for="task in tasks" :key="task.uuid">
           <td>{{ task.uuid }}</td>
           <td>{{ task.submitted }}</td>
           <td>
@@ -51,6 +51,10 @@
 <script>
 export default {
   name: 'Tasks',
-  props: ['tasks'],
+  computed: {
+    tasks() {
+      return this.$store.state.tasks;
+    },
+  }
 }
 </script>

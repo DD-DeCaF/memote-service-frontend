@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <Header/>
-    <Upload @task-created="addTask" />
-    <Tasks v-bind:tasks="tasks" />
+    <Upload/>
+    <Tasks/>
     <Welcome/>
     <Footer/>
   </div>
@@ -26,51 +26,18 @@ export default {
     Welcome,
     Footer,
   },
-  data: () => ({
-    tasks: []
-  }),
-  methods: {
-    readTasks() {
-      if(localStorage.getItem('tasks') === null) {
-        this.persistTasks();
-      } else {
-        this.tasks = JSON.parse(localStorage.getItem('tasks'));
-      }
-    },
-    addTask(uuid) {
-      this.tasks.push({
-        uuid: uuid,
-        submitted: new Date(),
-        status: 'PENDING',
-      });
-      this.persistTasks();
-    },
-    persistTasks() {
-      localStorage.setItem('tasks', JSON.stringify(this.tasks));
-    },
-    pollTasks() {
-      this.tasks.forEach((task) => {
-        if(task.status === 'SUCCESS' || task.status == 'FAILURE') {
-          return;
-        }
-
-        axios
-          .get(`http://localhost:8000/memote-webservice/status/${task.uuid}`)
-          .then(response => {
-            console.log(response.data);
-            task.status = response.data.status;
-          }).catch(error => {
-            // TODO
-            console.log(error);
-          });
-      });
-      this.persistTasks();
-      setTimeout(this.pollTasks, 1000);
-    },
-  },
   created() {
-    this.readTasks();
-    this.pollTasks();
+    // Read existing tasks from local storage.
+    this.$store.dispatch('readTasks');
+
+    // Loop all tasks and refresh their status indefinitely.
+    const pollTasksLoop = () => {
+      this.$store.state.tasks.forEach((task, index) => {
+        this.$store.dispatch('pollTaskStatus', {task: task, index: index});
+      })
+      setTimeout(pollTasksLoop, 1000);
+    }
+    pollTasksLoop();
   },
 };
 </script>
