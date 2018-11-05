@@ -63,7 +63,7 @@ export default {
         }).catch(error => {
           this.uploadError = true;
           if(error.response) {
-            this.uploadErrorMessage = `${error.response.status}: ${error.response.data.message}`;
+            this.uploadErrorMessage = error.response.data.message;
           }
         }).then(() => {
           this.$refs.modelInput.value = '';
