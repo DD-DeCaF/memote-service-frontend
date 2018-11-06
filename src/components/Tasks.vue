@@ -49,7 +49,7 @@
                 <strong>{{ task.failureException }}: {{ task.failureMessage }}</strong>
               </p>
             </div>
-            <a v-if="task.status === 'SUCCESS'" class="btn" :href="'report/' + task.uuid" target="_blank">
+            <a v-if="task.status === 'SUCCESS'" class="btn memote-blue" :href="'report/' + task.uuid" target="_blank">
               <i class="material-icons left">done</i>
               View report
             </a>

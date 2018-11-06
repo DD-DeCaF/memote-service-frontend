@@ -46,6 +46,9 @@ export default {
 .memote-blue {
   background-color: #2a7bb8;
 }
+.memote-blue.btn:hover {
+  background-color: #A3D0E0;
+}
 .memote-blue-text {
   color: #2a7bb8;
 }
