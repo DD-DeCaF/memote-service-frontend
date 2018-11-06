@@ -29,10 +29,6 @@ export default {
 </script>
 
 <style scoped>
-.memote-blue {
-  background-color: #2a7bb8;
-}
-
 img {
   width: 52px;
   margin: 5px 15px;
