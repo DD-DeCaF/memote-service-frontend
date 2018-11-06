@@ -1,14 +1,35 @@
 <template>
   <div class="container center-align center-box">
-    <div class="form-group files">
-      <label class="label-upload">Upload Your Model</label>
-      <input
-        type="file"
-        ref="modelInput"
-        class="form-control"
-        accept="text/xml,.json,.xml.gz,.xml.bz2,.sbml.gz,.sbml.bz2"
-        @change="uploadFile()"
-      >
+    <label class="label-upload">
+      Upload Your Model
+    </label>
+    <div class="row">
+      <div class="col s2">
+      </div>
+      <div class="col s8">
+        <div
+          v-bind:class="'form-group files ' + dragging"
+          @dragenter="dragEnter"
+          @dragover="dragOver"
+          @dragexit="dragExit"
+          @drop="drop">
+          <input
+            type="file"
+            ref="modelInput"
+            class="form-control"
+            accept="text/xml,.json,.xml.gz,.xml.bz2,.sbml.gz,.sbml.bz2"
+            @change="uploadFile()"
+          >
+        </div>
+      </div>
+      <div class="col s2">
+        <div class="sampleModel">
+          <i class="material-icons left">reply</i>
+          <img src="@/assets/e_coli_core.svg">
+          <br>
+          Drag &amp; drop me!
+        </div>
+      </div>
     </div>
     <div class="progress" v-if="uploading">
       <div class="determinate" :style="'width: ' + uploadProgress + '%'"></div>
@@ -25,28 +46,55 @@
 
 <script>
 import * as axios from 'axios';
+import exampleModel from '@/assets/e_coli_core.json';
 import settings from '@/settings';
 
 export default {
   name: 'Upload',
   data: () => ({
+    dragging: '',
     uploading: false,
     uploadProgress: null,
     uploadError: false,
     uploadErrorMessage: null,
   }),
   methods: {
+    dragEnter(event) {
+      this.dragging = 'dragging';
+    },
+    dragOver(event) {
+      event.preventDefault();
+    },
+    dragExit(event) {
+      this.dragging = '';
+    },
+    drop(event) {
+      event.preventDefault();
+      this.dragging = '';
+      const src = event.dataTransfer.getData("text/plain");
+      if (src.includes("e_coli_core")) {
+        this.submitExampleModel();
+      }
+    },
+    submitExampleModel() {
+      const formData = new FormData();
+      const blob = new Blob([JSON.stringify(exampleModel)], {type: "application.json"});
+      formData.append('model', blob, "e_coli_core.json");
+      this.submitModel(formData);
+    },
     uploadFile() {
       if (!this.$refs.modelInput.files) {
         return;
       }
-
+      const formData = new FormData();
+      formData.append('model', this.$refs.modelInput.files[0]);
+      this.submitModel(formData);
+    },
+    submitModel(formData) {
       this.uploading = true;
       this.uploadProgress = 0;
       this.uploadError = false;
       this.uploadErrorMessage = null;
-      const formData = new FormData();
-      formData.append('model', this.$refs.modelInput.files[0]);
 
       axios
         .post(`${settings.api}/submit`, formData, {
@@ -59,7 +107,7 @@ export default {
         }).then((response) => {
           this.$store.dispatch('addTask', {
             uuid: response.data.uuid,
-            filename: this.$refs.modelInput.files[0].name,
+            filename: formData.get('model').name,
           });
         }).catch((error) => {
           this.uploadError = true;
@@ -81,10 +129,27 @@ h1 {
   font-weight: bold;
 }
 
+.sampleModel {
+  max-width: 100px;
+}
+
+.sampleModel .material-icons {
+  font-size: 70px;
+  color: #A3D0E0;
+}
+
+.sampleModel img {
+  width: 70px;
+}
+
 .label-upload {
   font-size: 24px;
   font-weight: bold;
   color: rgba(0,0,0,0.87);
+}
+
+.files.dragging {
+  opacity: 0.4;
 }
 
 .files input {
@@ -94,15 +159,12 @@ h1 {
   transition: outline-offset .15s ease-in-out, background-color .15s linear;
   padding: 120px 0px 85px 20%;
   text-align: center !important;
-  width: 100% !important;
   box-sizing:border-box;
   -moz-box-sizing:border-box; /* Firefox */
   -webkit-box-sizing:border-box; /* Safari */
-  margin-left:auto;
-  margin-right: auto;
   cursor:pointer;
-  max-width: 800px;
   display: block;
+  width: 100%;
 }
 .files input:focus{
   outline: 2px dashed #2a7bb8;
@@ -117,7 +179,7 @@ h1 {
 .files:after {
   pointer-events: none;
   position: absolute;
-  top: 90px;
+  top: 30px;
   left: 0;
   width: 70px;
   right: 0;
