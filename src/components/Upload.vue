@@ -27,7 +27,7 @@
           <i class="material-icons left">reply</i>
           <img src="@/assets/e_coli_core.svg">
           <br>
-          Drag &amp; drop me!
+          Drag &amp; drop me! <sup>1</sup>
         </div>
       </div>
     </div>

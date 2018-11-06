@@ -34,6 +34,10 @@
       href="https://www.biorxiv.org/content/early/2018/07/11/350991" target="_blank">Cite us</a>,
       Star us, and contribute on <a
         href="https://www.github.com/opencobra/memote" target="_blank">GitHub</a></p>
+    <hr>
+    <p>
+      1. Our sample model is the <em>E. coli</em> core model published here: <a href="https://dx.doi.org/10.1128/ecosalplus.10.2.1">10.1128/ecosalplus.10.2.1</a>
+    </p>
   </div>
 </template>
 
