@@ -42,7 +42,7 @@
             </div>
             <div v-if="task.status === 'FAILURE'">
               <p>An error occurred during test execution. Please let us know by <a href="https://github.com/opencobra/memote/issues">submitting an issue</a> with your full model and the error message below:</p>
-              <p class="red-tex" v-if="!task.failureMessage">
+              <p class="red-text" v-if="!task.failureMessage">
                 Loading error report...
               </p>
               <p class="red-text" v-if="task.failureMessage">
