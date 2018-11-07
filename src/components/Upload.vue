@@ -18,14 +18,14 @@
             ref="modelInput"
             class="form-control"
             accept="text/xml,.json,.xml.gz,.xml.bz2,.sbml.gz,.sbml.bz2"
-            @change="uploadFile()"
+            @change="uploadFile"
           >
         </div>
       </div>
       <div class="col s2">
         <div class="sampleModel">
           <i class="material-icons left">reply</i>
-          <img src="@/assets/e_coli_core.svg">
+          <img src="@/assets/e_coli_core.svg" draggable="true" @dragstart="dragStart">
           <br>
           Drag &amp; drop me! <sup>1</sup>
         </div>
@@ -59,6 +59,9 @@ export default {
     uploadErrorMessage: null,
   }),
   methods: {
+    dragStart(event) {
+       event.dataTransfer.setData("text/plain", "sample-model");
+    },
     dragEnter(event) {
       this.dragging = 'dragging';
     },
@@ -69,11 +72,11 @@ export default {
       this.dragging = '';
     },
     drop(event) {
-      event.preventDefault();
       this.dragging = '';
       const src = event.dataTransfer.getData("text/plain");
-      if (src.includes("e_coli_core")) {
+      if (src === "sample-model") {
         this.submitExampleModel();
+        event.preventDefault();
       }
     },
     submitExampleModel() {
