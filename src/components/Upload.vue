@@ -11,7 +11,7 @@
           v-bind:class="'form-group files ' + dragging"
           @dragenter="dragEnter"
           @dragover="dragOver"
-          @dragexit="dragExit"
+          @dragleave="dragLeave"
           @drop="drop">
           <input
             type="file"
@@ -65,7 +65,7 @@ export default {
     dragOver(event) {
       event.preventDefault();
     },
-    dragExit(event) {
+    dragLeave(event) {
       this.dragging = '';
     },
     drop(event) {
