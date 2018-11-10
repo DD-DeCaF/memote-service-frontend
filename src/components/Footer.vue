@@ -25,12 +25,6 @@
   </footer>
 </template>
 
-<script>
-export default {
-  name: 'Footer',
-};
-</script>
-
 <style scoped>
 footer {
   margin-top: 100px;

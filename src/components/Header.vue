@@ -22,12 +22,6 @@
   </nav>
 </template>
 
-<script>
-export default {
-  name: 'Header',
-};
-</script>
-
 <style scoped>
 img {
   width: 52px;

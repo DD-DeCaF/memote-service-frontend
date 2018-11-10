@@ -50,7 +50,6 @@ import exampleModel from '@/assets/e_coli_core.json';
 import settings from '@/settings';
 
 export default {
-  name: 'Upload',
   data: () => ({
     dragging: '',
     uploading: false,

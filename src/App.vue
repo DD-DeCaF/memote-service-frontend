@@ -16,7 +16,6 @@ import Welcome from './components/Welcome.vue';
 import Footer from './components/Footer.vue';
 
 export default {
-  name: 'app',
   components: {
     Header,
     Upload,
