@@ -31,14 +31,14 @@
         </div>
       </div>
     </div>
-    <div class="progress" v-if="uploading">
+    <div class="progress" v-show="uploading">
       <div class="determinate" :style="'width: ' + uploadProgress + '%'"></div>
     </div>
-    <div class="card blue-grey darken-1" v-if="uploadError">
+    <div class="card blue-grey darken-1" v-show="uploadError">
       <div class="card-content red white-text">
         <span class="card-title">Could not upload your model</span>
         <p>We're sorry, we encountered an issue while trying to upload your model.</p>
-        <p v-if="uploadErrorMessage"><em>{{ uploadErrorMessage }}</em></p>
+        <p v-show="uploadErrorMessage"><em>{{ uploadErrorMessage }}</em></p>
       </div>
     </div>
   </div>
