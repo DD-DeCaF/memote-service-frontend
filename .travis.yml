@@ -24,8 +24,9 @@ install:
   - npm ci
   - npm run build
 
+script:
+  - npm run test:unit
 # TODO: configure and run linter
-# script:
 #   - npm run lint
 
 before_deploy:
