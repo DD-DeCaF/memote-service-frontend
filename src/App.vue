@@ -17,10 +17,14 @@ import Footer from './components/Footer.vue';
 
 export default {
   components: {
+    // See: https://github.com/vuejs/eslint-plugin-vue/issues/556
+    // eslint-disable-next-line vue/no-unused-components
     Header,
     Upload,
     Tasks,
     Welcome,
+    // See: https://github.com/vuejs/eslint-plugin-vue/issues/556
+    // eslint-disable-next-line vue/no-unused-components
     Footer,
   },
   created() {

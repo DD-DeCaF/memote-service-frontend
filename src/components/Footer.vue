@@ -19,7 +19,10 @@
       </div>
       <div class="col s2 offset-s1 center-align">
         <img src="../assets/images/eu_flag_yellow_low.png" class="icon" /><br>
-        <span class="fund-span">This project has received funding from the European Union’s Horizon 2020 research and innovation programme under grant agreement No 686070.</span>
+        <span class="fund-span">
+          This project has received funding from the European Union’s Horizon 2020 research and innovation programme
+          under grant agreement No 686070.
+        </span>
       </div>
     </div>
   </footer>

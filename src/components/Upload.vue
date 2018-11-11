@@ -59,29 +59,29 @@ export default {
   }),
   methods: {
     dragStart(event) {
-       event.dataTransfer.setData("text/plain", "sample-model");
+      event.dataTransfer.setData('text/plain', 'sample-model');
     },
-    dragEnter(event) {
+    dragEnter() {
       this.dragging = 'dragging';
     },
     dragOver(event) {
       event.preventDefault();
     },
-    dragLeave(event) {
+    dragLeave() {
       this.dragging = '';
     },
     drop(event) {
       this.dragging = '';
-      const src = event.dataTransfer.getData("text/plain");
-      if (src === "sample-model") {
+      const src = event.dataTransfer.getData('text/plain');
+      if (src === 'sample-model') {
         this.submitExampleModel();
         event.preventDefault();
       }
     },
     submitExampleModel() {
       const formData = new FormData();
-      const blob = new Blob([JSON.stringify(exampleModel)], {type: "application.json"});
-      formData.append('model', blob, "e_coli_core.json");
+      const blob = new Blob([JSON.stringify(exampleModel)], { type: 'application.json' });
+      formData.append('model', blob, 'e_coli_core.json');
       this.submitModel(formData);
     },
     uploadFile() {
@@ -104,7 +104,7 @@ export default {
             'Content-Type': 'multipart/form-data',
           },
           onUploadProgress: (progressEvent) => {
-            this.uploadProgress = parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total));
+            this.uploadProgress = parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total), 10);
           },
         }).then((response) => {
           this.$store.dispatch('addTask', {

@@ -74,7 +74,7 @@ export default new Vuex.Store({
           }
           context.commit('setTask', { index: payload.index, task: payload.task });
           context.dispatch('storeTasks');
-        }).catch((error) => {
+        }).catch(() => {
           payload.task.status = 'POLL_ERROR';
           context.commit('setTask', { index: payload.index, task: payload.task });
           context.dispatch('storeTasks');
@@ -89,7 +89,7 @@ export default new Vuex.Store({
             payload.task.failureException = response.data.exception;
             payload.task.failureMessage = response.data.message;
           }
-        }).catch((error) => {
+        }).catch(() => {
           payload.task.status = 'POLL_ERROR';
         }).then(() => {
           context.commit('setTask', { index: payload.index, task: payload.task });

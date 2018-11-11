@@ -41,7 +41,11 @@
               <div class="indeterminate"></div>
             </div>
             <div v-show="task.status === 'FAILURE'">
-              <p>An error occurred during test execution. Please let us know by <a href="https://github.com/opencobra/memote/issues">submitting an issue</a> with your full model and the error message below:</p>
+              <p>
+                An error occurred during test execution. Please let us know by
+                <a href="https://github.com/opencobra/memote/issues">submitting an issue</a> with your full model and
+                the error message below:
+              </p>
               <p class="red-text" v-show="!task.failureMessage">
                 Loading error report...
               </p>
