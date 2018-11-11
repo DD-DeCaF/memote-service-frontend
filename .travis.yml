@@ -25,9 +25,8 @@ install:
   - npm run build
 
 script:
+  - npx vue-cli-service lint --no-fix
   - npm run test:unit
-# TODO: configure and run linter
-#   - npm run lint
 
 before_deploy:
   - ./scripts/install_gcloud.sh
