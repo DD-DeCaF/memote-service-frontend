@@ -65,6 +65,7 @@ export default {
       this.dragging = 'dragging';
     },
     dragOver(event) {
+      this.dragging = 'dragging';
       event.preventDefault();
     },
     dragLeave() {
