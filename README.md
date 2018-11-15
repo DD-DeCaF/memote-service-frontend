@@ -1,5 +1,7 @@
 # Memote
 
+[![Build Status](https://travis-ci.org/DD-DeCaF/memote-service-frontend.svg?branch=master)](https://travis-ci.org/DD-DeCaF/memote-service-frontend)
+
 This is the frontend client for the memote.io web site, a free online service providing access to memote, the metabolic model test suite. See also the [backend service implementation](https://github.com/dd-decaf/memote-webservice).
 
 For more information about memote, see [opencobra/memote](https://github.com/opencobra/memote).
