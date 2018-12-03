@@ -39,6 +39,12 @@
         <span class="card-title">Could not upload your model</span>
         <p>We're sorry, we encountered an issue while trying to upload your model.</p>
         <p v-show="uploadErrorMessage"><em>{{ uploadErrorMessage }}</em></p>
+        <p>
+          If this is an SBML model, try submitting it to <a href="http://sbml.org/Facilities/Validator/">the SBML
+          Validator</a> to discover potential issues. If you believe your model is syntactically valid, please reach out
+          to us on <a href="https://gitter.im/opencobra/memote">gitter</a>, or open an issue on
+          <a href="https://github.com/opencobra/memote/issues">github</a>.
+        </p>
       </div>
     </div>
   </div>
@@ -130,6 +136,11 @@ export default {
 h1 {
   font-size: 24px;
   font-weight: bold;
+}
+
+.card-content a {
+  color: #fff;
+  text-decoration: underline;
 }
 
 .sampleModel {
