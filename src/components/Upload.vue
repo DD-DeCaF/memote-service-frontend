@@ -37,8 +37,17 @@
     <div class="card blue-grey darken-1" v-show="uploadError">
       <div class="card-content red white-text">
         <span class="card-title">Could not upload your model</span>
-        <p>We're sorry, we encountered an issue while trying to upload your model.</p>
-        <p v-show="uploadErrorMessage"><em>{{ uploadErrorMessage }}</em></p>
+        <p>
+          We're sorry, we encountered a network issue while trying to upload your model. Please check your internet
+          connection, and try again in a short while.
+        </p>
+      </div>
+    </div>
+    <div class="card blue-grey darken-1" v-show="parseError">
+      <div class="card-content red white-text">
+        <span class="card-title">Could not parse your model</span>
+        <p>We're sorry, we encountered an issue while trying to parse your model.</p>
+        <p v-show="parseErrorMessage"><em>{{ parseErrorMessage }}</em></p>
         <p>
           If this is an SBML model, try submitting it to <a href="http://sbml.org/Facilities/Validator/">the SBML
           Validator</a> to discover potential issues. If you believe your model is syntactically valid, please reach out
@@ -61,7 +70,8 @@ export default {
     uploading: false,
     uploadProgress: null,
     uploadError: false,
-    uploadErrorMessage: null,
+    parseError: false,
+    parseErrorMessage: null,
   }),
   methods: {
     dragStart(event) {
@@ -103,7 +113,8 @@ export default {
       this.uploading = true;
       this.uploadProgress = 0;
       this.uploadError = false;
-      this.uploadErrorMessage = null;
+      this.parseError = false;
+      this.parseErrorMessage = null;
 
       axios
         .post(`${settings.api}/submit`, formData, {
@@ -119,9 +130,11 @@ export default {
             filename: formData.get('model').name,
           });
         }).catch((error) => {
-          this.uploadError = true;
           if (error.response) {
-            this.uploadErrorMessage = error.response.data.message;
+            this.parseError = true;
+            this.parseErrorMessage = error.response.data.message;
+          } else {
+            this.uploadError = true;
           }
         }).then(() => {
           this.$refs.modelInput.value = '';
