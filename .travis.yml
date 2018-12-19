@@ -6,6 +6,11 @@ node_js:
 git:
   depth: 2
 
+branches:
+  only:
+  - master
+  - devel
+
 services:
   - docker
 
