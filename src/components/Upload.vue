@@ -43,17 +43,29 @@
         </p>
       </div>
     </div>
-    <div class="card blue-grey darken-1" v-show="parseError">
-      <div class="card-content red white-text">
-        <span class="card-title">Could not parse your model</span>
-        <p>We're sorry, we encountered an issue while trying to parse your model.</p>
-        <p v-show="parseErrorMessage"><em>{{ parseErrorMessage }}</em></p>
-        <p>
+
+    <div v-if="parseError">
+      <h4>{{ parseError.title }}</h4>
+      <div class="row">
+        <p class="col s8 offset-s2">
+          We're sorry, we encountered an issue while trying to parse your model. Look below for a detailed error report.
           If this is an SBML model, try submitting it to <a href="http://sbml.org/Facilities/Validator/">the SBML
           Validator</a> to discover potential issues. If you believe your model is syntactically valid, please reach out
           to us on <a href="https://gitter.im/opencobra/memote">gitter</a>, or open an issue on
           <a href="https://github.com/opencobra/memote/issues">github</a>.
         </p>
+      </div>
+
+      <div class="card blue-grey darken-1" v-for="warning in parseError.warnings" :key="warning">
+        <div class="card-content orange white-text">
+          <p>{{ warning }}</p>
+        </div>
+      </div>
+
+      <div class="card blue-grey darken-1" v-for="error in parseError.errors" :key="error">
+        <div class="card-content red white-text">
+          <p>{{ error }}</p>
+        </div>
       </div>
     </div>
   </div>
@@ -70,8 +82,7 @@ export default {
     uploading: false,
     uploadProgress: null,
     uploadError: false,
-    parseError: false,
-    parseErrorMessage: null,
+    parseError: null,
   }),
   methods: {
     dragStart(event) {
@@ -113,8 +124,7 @@ export default {
       this.uploading = true;
       this.uploadProgress = 0;
       this.uploadError = false;
-      this.parseError = false;
-      this.parseErrorMessage = null;
+      this.parseError = null;
 
       axios
         .post(`${settings.api}/submit`, formData, {
@@ -131,8 +141,18 @@ export default {
           });
         }).catch((error) => {
           if (error.response) {
-            this.parseError = true;
-            this.parseErrorMessage = error.response.data.message;
+            this.parseError = {};
+            if (error.response.data.code === 'sbml_validation_failure') {
+              // SBML validation errors return warnings and errors explicitly
+              this.parseError.title = 'SBML Validation failed';
+              this.parseError.warnings = error.response.data.warnings;
+              this.parseError.errors = error.response.data.errors;
+            } else {
+              // Other errors contain a single 'message' text field
+              this.parseError.title = 'Could not parse your model';
+              this.parseError.warnings = [];
+              this.parseError.errors = [error.response.data.message];
+            }
           } else {
             this.uploadError = true;
           }
@@ -151,7 +171,7 @@ h1 {
   font-weight: bold;
 }
 
-.card-content a {
+.card-content.white-text a {
   color: #fff;
   text-decoration: underline;
 }
