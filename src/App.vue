@@ -40,8 +40,6 @@ export default {
 </script>
 
 <style>
-@import './assets/materialize.min.css';
-
 .memote-blue {
   background-color: #2a7bb8;
 }
@@ -51,4 +49,9 @@ export default {
 .memote-blue-text {
   color: #2a7bb8;
 }
+
+body {
+  margin: 0;
+}
+
 </style>
