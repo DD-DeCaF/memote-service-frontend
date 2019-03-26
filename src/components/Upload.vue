@@ -1,12 +1,13 @@
 <template>
-  <div class="container center-align center-box">
-    <label class="label-upload">
+  <div class="mdc-layout-grid">
+  <div class="mdc-layout-grid__inner">
+    <div class="mdc-layout-grid__cell--span-12" style="text-align:center">
+      <label class="label-upload">
       Upload Your Model
-    </label>
-    <div class="row">
-      <div class="col s2">
-      </div>
-      <div class="col s8">
+      </label>
+    </div>
+    <div class="mdc-layout-grid__cell--span-2"></div>
+    <div class="mdc-layout-grid__cell--span-8">
         <div
           v-bind:class="'form-group files ' + dragging"
           @dragenter="dragEnter"
@@ -22,13 +23,24 @@
           >
         </div>
       </div>
-      <div class="col s2">
+      <div class="mdc-layout-grid__cell--span-2">
         <div class="sampleModel">
           <i class="material-icons left">reply</i>
           <img src="@/assets/e_coli_core.svg" draggable="true" @dragstart="dragStart">
           <br>
           Drag &amp; drop me! <sup>1</sup>
         </div>
+      </div>
+    </div>
+    <div role="progressbar" class="mdc-linear-progress" v-show="uploading">
+      <div class="mdc-linear-progress__buffering-dots"></div>
+      <div class="mdc-linear-progress__buffer"></div>
+      <div class="mdc-linear-progress__bar mdc-linear-progress__primary-bar"
+           :style="'transform: scaleX(' + uploadProgress + ')'">
+        <span class="mdc-linear-progress__bar-inner"></span>
+      </div>
+      <div class="mdc-linear-progress__bar mdc-linear-progress__secondary-bar">
+        <span class="mdc-linear-progress__bar-inner"></span>
       </div>
     </div>
     <div class="progress" v-show="uploading">
@@ -132,7 +144,7 @@ export default {
             'Content-Type': 'multipart/form-data',
           },
           onUploadProgress: (progressEvent) => {
-            this.uploadProgress = parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total), 10);
+            this.uploadProgress = Math.round((progressEvent.loaded) / progressEvent.total);
           },
         }).then((response) => {
           this.$store.dispatch('addTask', {
@@ -193,6 +205,7 @@ h1 {
   font-size: 24px;
   font-weight: bold;
   color: rgba(0,0,0,0.87);
+
 }
 
 .files.dragging {

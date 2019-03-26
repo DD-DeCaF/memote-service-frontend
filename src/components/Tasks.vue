@@ -1,5 +1,8 @@
 <template>
-  <div class="container">
+  <div class="mdc-layout-grid">
+  <div class="mdc-layout-grid__inner">
+    <div class="mdc-layout-grid__cell--span-2"></div>
+    <div class="mdc-layout-grid__cell--span-8">
     <table class="striped" v-show="tasks.length > 0">
       <thead>
         <tr>
@@ -69,6 +72,8 @@
         </tr>
       </tbody>
     </table>
+  </div>
+  </div>
   </div>
 </template>
 

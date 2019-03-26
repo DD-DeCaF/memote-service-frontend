@@ -1,5 +1,8 @@
 <template>
-  <div class="container">
+  <div class="mdc-layout-grid">
+  <div class="mdc-layout-grid__inner">
+    <div class="mdc-layout-grid__cell--span-2"></div>
+    <div class="mdc-layout-grid__cell--span-8">
     <p>Hi there!</p>
     <p>Genome-scale metabolic models are tough to understand at a glance. Memote, short for metabolic model tests, is
       here to change that.</p>
@@ -39,5 +42,7 @@
       1. Our sample model is the <em>E. coli</em> core model published here:
       <a href="https://dx.doi.org/10.1128/ecosalplus.10.2.1">10.1128/ecosalplus.10.2.1</a>
     </p>
+  </div>
+  </div>
   </div>
 </template>
