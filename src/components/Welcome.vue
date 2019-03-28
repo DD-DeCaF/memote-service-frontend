@@ -22,13 +22,13 @@
     </p>
     PLEASE NOTE:
     <ul class="note-list">
-      <li>- Depending on the amount of reactions in your model, testing may take a while (possibly &gt;10 minutes).</li>
-      <li>- Currently, the resulting report points to potential issues yet offers only limited suggestions
+      <li>Depending on the amount of reactions in your model, testing may take a while (possibly &gt;10 minutes).</li>
+      <li>Currently, the resulting report points to potential issues yet offers only limited suggestions
         towards fixing these. Get involved to change this!</li>
-      <li>- Genome-scale metabolic models are published in two flavors:
+      <li>Genome-scale metabolic models are published in two flavors:
         Condition-specific models vs. Uninitialized Reconstructions. Individual unscored tests may only apply to the
       former as they require initialization.</li>
-      <li>- Be aware that <u>the report will remain available for up to one week via an auto-generated URL.</u></li>
+      <li>Be aware that <u>the report will remain available for up to one week via an auto-generated URL.</u></li>
     </ul>
     <p>Check out the <a href="http://memote.readthedocs.io/en/latest/" target="_blank">documentation</a>, <a
       href="https://www.biorxiv.org/content/early/2018/07/11/350991" target="_blank">Cite us</a>,
@@ -41,3 +41,13 @@
     </p>
   </div>
 </template>
+
+<style scoped>
+.note-list {
+  padding-left: 40px;
+}
+
+.note-list, .note-list li {
+  list-style-type: disc;
+}
+</style>
