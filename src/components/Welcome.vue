@@ -29,6 +29,11 @@
         Condition-specific models vs. Uninitialized Reconstructions. Individual unscored tests may only apply to the
       former as they require initialization.</li>
       <li>Be aware that <u>the report will remain available for up to one week via an auto-generated URL.</u></li>
+      <li>We store uploaded models temporarily along with the report in order to aid debugging and resolving potential
+        issues that may occur during test executions. The models are not available to other users and expire along with
+        the report results. If you do not wish to give us access to your model, consider
+        <a href="https://memote.readthedocs.io/en/latest/installation.html">installing and running memote locally</a>.
+        </li>
     </ul>
     <p>Check out the <a href="http://memote.readthedocs.io/en/latest/" target="_blank">documentation</a>, <a
       href="https://www.biorxiv.org/content/early/2018/07/11/350991" target="_blank">Cite us</a>,
