@@ -51,10 +51,6 @@ export default new Vuex.Store({
       context.dispatch('storeTasks');
     },
     pollTaskStatus(context, payload) {
-      if (payload.task.status === 'SUCCESS' || payload.task.status === 'FAILURE') {
-        return;
-      }
-
       axios
         .get(`${settings.api}/status/${payload.task.uuid}`)
         .then((response) => {
