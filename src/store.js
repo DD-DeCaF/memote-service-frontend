@@ -51,16 +51,12 @@ export default new Vuex.Store({
       context.dispatch('storeTasks');
     },
     pollTaskStatus(context, payload) {
-      if (payload.task.status === 'SUCCESS' || payload.task.status === 'FAILURE') {
-        return;
-      }
-
       axios
         .get(`${settings.api}/status/${payload.task.uuid}`)
         .then((response) => {
           if (response.data.status === 'PENDING') {
             // PENDING in celery means "don't know". If the job is not expired, assume it is in the queue, otherwise
-            // mark it as expired.
+            // mark it as expired and forget about it.
             if (moment(payload.task.expiry).isBefore(moment())) {
               payload.task.status = 'EXPIRED';
             } else {
