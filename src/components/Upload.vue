@@ -73,6 +73,7 @@
 
 <script>
 import * as axios from 'axios';
+import * as moment from 'moment';
 import exampleModel from '@/assets/e_coli_core.json';
 import settings from '@/settings';
 
@@ -138,6 +139,11 @@ export default {
           this.$store.dispatch('addTask', {
             uuid: response.data.uuid,
             filename: formData.get('model').name,
+            submitted: moment().toJSON(),
+            expiry: moment().add(settings.resultExpires, 'days').toJSON(),
+            status: 'QUEUED',
+            failureException: null,
+            failureMessage: null,
           });
         }).catch((error) => {
           if (error.response) {

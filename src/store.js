@@ -22,8 +22,8 @@ export default new Vuex.Store({
     tasks: [],
   },
   mutations: {
-    setTasks(state, tasks) {
-      state.tasks = tasks;
+    addTask(state, task) {
+      state.tasks.push(task);
     },
     setTask(state, payload) {
       state.tasks[payload.index] = payload.task;
@@ -31,30 +31,21 @@ export default new Vuex.Store({
     clearTask(state, task) {
       state.tasks = state.tasks.filter(t => t !== task);
     },
-    addTask(state, { filename, uuid }) {
-      state.tasks.push({
-        filename,
-        uuid,
-        submitted: moment().toJSON(),
-        expiry: moment().add(settings.resultExpires, 'days').toJSON(),
-        status: 'QUEUED',
-        failureException: null,
-        failureMessage: null,
-      });
-    },
   },
   actions: {
     readTasks(context) {
       const tasks = localStorage.getItem('tasks');
       if (tasks !== null) {
-        context.commit('setTasks', JSON.parse(tasks));
+        JSON.parse(tasks).forEach((task) => {
+          context.commit('addTask', task);
+        });
       }
     },
     storeTasks(context) {
       localStorage.setItem('tasks', JSON.stringify(context.state.tasks));
     },
-    addTask(context, uuid) {
-      context.commit('addTask', uuid);
+    addTask(context, task) {
+      context.commit('addTask', task);
       context.dispatch('storeTasks');
     },
     clearTask(context, task) {
