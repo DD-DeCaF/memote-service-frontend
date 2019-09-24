@@ -41,16 +41,11 @@ export default new Vuex.Store({
         });
       }
     },
-    storeTasks(context) {
-      localStorage.setItem('tasks', JSON.stringify(context.state.tasks));
-    },
     addTask(context, task) {
       context.commit('addTask', task);
-      context.dispatch('storeTasks');
     },
     clearTask(context, task) {
       context.commit('clearTask', task);
-      context.dispatch('storeTasks');
     },
     pollTaskStatus(context, payload) {
       axios
@@ -71,11 +66,9 @@ export default new Vuex.Store({
             payload.task.status = response.data.status;
           }
           context.commit('setTask', { index: payload.index, task: payload.task });
-          context.dispatch('storeTasks');
         }).catch(() => {
           payload.task.status = 'POLL_ERROR';
           context.commit('setTask', { index: payload.index, task: payload.task });
-          context.dispatch('storeTasks');
         });
     },
     getTask(context, payload) {
@@ -91,7 +84,6 @@ export default new Vuex.Store({
           payload.task.status = 'POLL_ERROR';
         }).then(() => {
           context.commit('setTask', { index: payload.index, task: payload.task });
-          context.dispatch('storeTasks');
         });
     },
   },

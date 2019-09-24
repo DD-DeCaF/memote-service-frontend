@@ -37,6 +37,11 @@ export default {
       setTimeout(pollTasksLoop, 3000);
     };
     pollTasksLoop();
+
+    // Store tasks when tab is closed
+    window.addEventListener('beforeunload', () => {
+      localStorage.setItem('tasks', JSON.stringify(this.$store.state.tasks));
+    });
   },
 };
 </script>
