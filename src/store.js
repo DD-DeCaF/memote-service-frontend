@@ -23,6 +23,14 @@ export default new Vuex.Store({
   },
   mutations: {
     addTask(state, task) {
+      // Check for and ignore tasks with duplicate UUIDs. This check deals with
+      // an earlier bug (it's unlikely to happen now). It also fixes state for
+      // any users who visited the site while the bug was active.
+      // The check can be removed when all those users have visited the site,
+      // but it's of course hard to say when that would be.
+      if (state.tasks.find(t => t.uuid === task.uuid)) {
+        return;
+      }
       state.tasks.push(task);
     },
     setTask(state, task) {
