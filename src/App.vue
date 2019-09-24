@@ -31,8 +31,8 @@ export default {
     const pollTasksLoop = () => {
       this.$store.state.tasks
         .filter(task => !['SUCCESS', 'FAILURE', 'EXPIRED'].includes(task.status))
-        .forEach((task, index) => {
-          this.$store.dispatch('pollTaskStatus', { task, index });
+        .forEach((task) => {
+          this.$store.dispatch('pollTaskStatus', task);
         });
       setTimeout(pollTasksLoop, 3000);
     };

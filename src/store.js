@@ -25,8 +25,9 @@ export default new Vuex.Store({
     addTask(state, task) {
       state.tasks.push(task);
     },
-    setTask(state, payload) {
-      state.tasks[payload.index] = payload.task;
+    setTask(state, task) {
+      const index = state.tasks.findIndex(t => t.uuid === task.uuid);
+      state.tasks[index] = task;
     },
     clearTask(state, task) {
       state.tasks = state.tasks.filter(t => t !== task);
@@ -41,43 +42,43 @@ export default new Vuex.Store({
         });
       }
     },
-    pollTaskStatus(context, payload) {
+    pollTaskStatus(context, task) {
       axios
-        .get(`${settings.api}/status/${payload.task.uuid}`)
+        .get(`${settings.api}/status/${task.uuid}`)
         .then((response) => {
           if (response.data.status === 'PENDING') {
             // PENDING in celery means "don't know". If the job is not expired, assume it is in the queue, otherwise
             // mark it as expired and forget about it.
-            if (moment(payload.task.expiry).isBefore(moment())) {
-              payload.task.status = 'EXPIRED';
+            if (moment(task.expiry).isBefore(moment())) {
+              task.status = 'EXPIRED';
             } else {
-              payload.task.status = 'QUEUED';
+              task.status = 'QUEUED';
             }
           } else if (response.data.status === 'FAILURE') {
-            payload.task.status = response.data.status;
-            context.dispatch('getTask', payload);
+            task.status = response.data.status;
+            context.dispatch('getTask', task);
           } else {
-            payload.task.status = response.data.status;
+            task.status = response.data.status;
           }
-          context.commit('setTask', { index: payload.index, task: payload.task });
+          context.commit('setTask', task);
         }).catch(() => {
-          payload.task.status = 'POLL_ERROR';
-          context.commit('setTask', { index: payload.index, task: payload.task });
+          task.status = 'POLL_ERROR';
+          context.commit('setTask', task);
         });
     },
-    getTask(context, payload) {
+    getTask(context, task) {
       axios
-        .get(`${settings.api}/report/${payload.task.uuid}`)
+        .get(`${settings.api}/report/${task.uuid}`)
         .then((response) => {
-          payload.task.status = response.data.status;
+          task.status = response.data.status;
           if (response.data.status === 'FAILURE') {
-            payload.task.failureException = response.data.exception;
-            payload.task.failureMessage = response.data.message;
+            task.failureException = response.data.exception;
+            task.failureMessage = response.data.message;
           }
         }).catch(() => {
-          payload.task.status = 'POLL_ERROR';
+          task.status = 'POLL_ERROR';
         }).then(() => {
-          context.commit('setTask', { index: payload.index, task: payload.task });
+          context.commit('setTask', task);
         });
     },
   },
