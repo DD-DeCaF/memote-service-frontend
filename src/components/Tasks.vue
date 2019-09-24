@@ -79,7 +79,7 @@ export default {
   name: 'Tasks',
   methods: {
     clearTask(task) {
-      this.$store.dispatch('clearTask', task);
+      this.$store.commit('clearTask', task);
     },
   },
   computed: {

@@ -136,7 +136,7 @@ export default {
             this.uploadProgress = parseInt(Math.round((progressEvent.loaded * 100) / progressEvent.total), 10);
           },
         }).then((response) => {
-          this.$store.dispatch('addTask', {
+          this.$store.commit('addTask', {
             uuid: response.data.uuid,
             filename: formData.get('model').name,
             submitted: moment().toJSON(),

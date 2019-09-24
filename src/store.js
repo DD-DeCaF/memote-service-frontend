@@ -41,12 +41,6 @@ export default new Vuex.Store({
         });
       }
     },
-    addTask(context, task) {
-      context.commit('addTask', task);
-    },
-    clearTask(context, task) {
-      context.commit('clearTask', task);
-    },
     pollTaskStatus(context, payload) {
       axios
         .get(`${settings.api}/status/${payload.task.uuid}`)
