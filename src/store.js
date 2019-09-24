@@ -6,6 +6,17 @@ import settings from '@/settings';
 
 Vue.use(Vuex);
 
+// Task type:
+// {
+//   filename: string
+//   uuid: string
+//   submitted: string (moment.toJSON() datetime)
+//   expiry: string (moment.toJSON() datetime)
+//   status: string (QUEUED | STARTED | FAILURE | SUCCESS | EXPIRED | POLL_ERROR)
+//   failureException: string | null
+//   failureMessage: string | null
+// }
+
 export default new Vuex.Store({
   state: {
     tasks: [],
