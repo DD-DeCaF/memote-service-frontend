@@ -28,16 +28,12 @@ export default {
     this.$store.dispatch('readTasks');
 
     // Loop all tasks and refresh their status indefinitely.
-    const pollTasksLoop = () => {
+    const updateTasksLoop = () => {
       this.$store.dispatch('checkExpiredTasks');
-      this.$store.state.tasks
-        .filter(task => !['SUCCESS', 'FAILURE', 'EXPIRED'].includes(task.status))
-        .forEach((task) => {
-          this.$store.dispatch('pollTaskStatus', task);
-        });
-      setTimeout(pollTasksLoop, 3000);
+      this.$store.dispatch('pollRunningTasks');
+      setTimeout(updateTasksLoop, 3000);
     };
-    pollTasksLoop();
+    updateTasksLoop();
 
     // Store tasks when tab is closed
     window.addEventListener('beforeunload', () => {

@@ -61,23 +61,27 @@ export default new Vuex.Store({
           }
         });
     },
-    pollTaskStatus(context, task) {
-      axios
-        .get(`${settings.api}/status/${task.uuid}`)
-        .then((response) => {
-          if (response.data.status === 'PENDING') {
-            // PENDING in celery means "don't know", assume it is in the queue.
-            task.status = 'QUEUED';
-          } else if (response.data.status === 'FAILURE') {
-            task.status = response.data.status;
-            context.dispatch('getTask', task);
-          } else {
-            task.status = response.data.status;
-          }
-          context.commit('setTask', task);
-        }).catch(() => {
-          task.status = 'POLL_ERROR';
-          context.commit('setTask', task);
+    pollRunningTasks(context) {
+      context.state.tasks
+        .filter(task => !['SUCCESS', 'FAILURE', 'EXPIRED'].includes(task.status))
+        .forEach((task) => {
+          axios
+            .get(`${settings.api}/status/${task.uuid}`)
+            .then((response) => {
+              if (response.data.status === 'PENDING') {
+                // PENDING in celery means "don't know", assume it is in the queue.
+                task.status = 'QUEUED';
+              } else if (response.data.status === 'FAILURE') {
+                task.status = response.data.status;
+                context.dispatch('getTask', task);
+              } else {
+                task.status = response.data.status;
+              }
+              context.commit('setTask', task);
+            }).catch(() => {
+              task.status = 'POLL_ERROR';
+              context.commit('setTask', task);
+            });
         });
     },
     getTask(context, task) {
