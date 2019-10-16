@@ -29,6 +29,7 @@ export default {
 
     // Loop all tasks and refresh their status indefinitely.
     const pollTasksLoop = () => {
+      this.$store.dispatch('checkExpiredTasks');
       this.$store.state.tasks
         .filter(task => !['SUCCESS', 'FAILURE', 'EXPIRED'].includes(task.status))
         .forEach((task) => {

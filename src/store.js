@@ -50,18 +50,24 @@ export default new Vuex.Store({
         });
       }
     },
+    checkExpiredTasks(context) {
+      // Check if any task has passed its expiry date. Celery won't give us any
+      // expiry information, so check manually client-side.
+      context.state.tasks
+        .filter(task => task.status !== 'EXPIRED')
+        .forEach((task) => {
+          if (moment(task.expiry).isBefore(moment())) {
+            task.status = 'EXPIRED';
+          }
+        });
+    },
     pollTaskStatus(context, task) {
       axios
         .get(`${settings.api}/status/${task.uuid}`)
         .then((response) => {
           if (response.data.status === 'PENDING') {
-            // PENDING in celery means "don't know". If the job is not expired, assume it is in the queue, otherwise
-            // mark it as expired and forget about it.
-            if (moment(task.expiry).isBefore(moment())) {
-              task.status = 'EXPIRED';
-            } else {
-              task.status = 'QUEUED';
-            }
+            // PENDING in celery means "don't know", assume it is in the queue.
+            task.status = 'QUEUED';
           } else if (response.data.status === 'FAILURE') {
             task.status = response.data.status;
             context.dispatch('getTask', task);
