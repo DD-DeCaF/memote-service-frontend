@@ -35,7 +35,7 @@ export default new Vuex.Store({
     },
     setTask(state, task) {
       const index = state.tasks.findIndex(t => t.uuid === task.uuid);
-      state.tasks[index] = task;
+      Vue.set(state.tasks, index, task);
     },
     clearTask(state, task) {
       state.tasks = state.tasks.filter(t => t !== task);
@@ -57,7 +57,7 @@ export default new Vuex.Store({
         .filter(task => task.status !== 'EXPIRED')
         .forEach((task) => {
           if (moment(task.expiry).isBefore(moment())) {
-            task.status = 'EXPIRED';
+            context.commit('setTask', { ...task, status: 'EXPIRED' });
           }
         });
     },
@@ -70,17 +70,15 @@ export default new Vuex.Store({
             .then((response) => {
               if (response.data.status === 'PENDING') {
                 // PENDING in celery means "don't know", assume it is in the queue.
-                task.status = 'QUEUED';
+                context.commit('setTask', { ...task, status: 'QUEUED' });
               } else if (response.data.status === 'FAILURE') {
-                task.status = response.data.status;
+                context.commit('setTask', { ...task, status: response.data.status });
                 context.dispatch('getTask', task);
               } else {
-                task.status = response.data.status;
+                context.commit('setTask', { ...task, status: response.data.status });
               }
-              context.commit('setTask', task);
             }).catch(() => {
-              task.status = 'POLL_ERROR';
-              context.commit('setTask', task);
+              context.commit('setTask', { ...task, status: 'POLL_ERROR' });
             });
         });
     },
@@ -88,15 +86,16 @@ export default new Vuex.Store({
       axios
         .get(`${settings.api}/report/${task.uuid}`)
         .then((response) => {
-          task.status = response.data.status;
+          context.commit('setTask', { ...task, status: response.data.status });
           if (response.data.status === 'FAILURE') {
-            task.failureException = response.data.exception;
-            task.failureMessage = response.data.message;
+            context.commit('setTask', {
+              ...task,
+              failureException: response.data.exception,
+              failureMessage: response.data.message,
+            });
           }
         }).catch(() => {
-          task.status = 'POLL_ERROR';
-        }).then(() => {
-          context.commit('setTask', task);
+          context.commit('setTask', { ...task, status: 'POLL_ERROR' });
         });
     },
   },
