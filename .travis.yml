@@ -30,7 +30,7 @@ install:
   - npm run build
 
 script:
-  - npx vue-cli-service lint --no-fix
+  - npx vue-cli-service lint --no-fix --max-warnings 0
   - npm run test:unit
 
 before_deploy:
