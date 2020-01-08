@@ -72,8 +72,9 @@ export default new Vuex.Store({
                 // PENDING in celery means "don't know", assume it is in the queue.
                 context.commit('setTask', { ...task, status: 'QUEUED' });
               } else if (response.data.status === 'FAILURE') {
-                context.commit('setTask', { ...task, status: response.data.status });
-                context.dispatch('getTask', task);
+                const newTask = { ...task, status: response.data.status };
+                context.commit('setTask', newTask);
+                context.dispatch('getTask', newTask);
               } else {
                 context.commit('setTask', { ...task, status: response.data.status });
               }
