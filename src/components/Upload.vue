@@ -38,7 +38,12 @@
       <div class="card-content orange white-text">
         <span class="card-title">Service announcement</span>
         <p>
-          We are currently experiencing problems with the MEMOTE web service struggling with larger models. We are working on a solution but it might take a while to debug. Please consider using MEMOTE locally (see <a href="https://memote.readthedocs.io/">Documentation</a>) in the meantime. If you happen to be a savvy web developer, consider getting involved in MEMOTE's development (contact us at niso@dtu.dk) 👍.
+          We are currently experiencing problems with the MEMOTE web service
+          struggling with larger models. We are working on a solution but it
+          might take a while to debug. Please consider using MEMOTE locally
+          (see <a href="https://memote.readthedocs.io/">Documentation</a>)
+          in the meantime. If you happen to be a savvy web developer, consider
+          getting involved in MEMOTE's development (contact us at niso@dtu.dk) 👍.
         </p>
       </div>
     </div>
